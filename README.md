@@ -39,3 +39,31 @@ SLH => Collin
 Bank + 5000
 
 SLHDotNetCore
+
+```sql
+
+SELECT [BlogId]
+      ,[BlogTitle]
+      ,[BlogAuthor]
+      ,[BlogContent]
+  FROM [dbo].[Tbl_Blog]
+
+GO
+
+select * from Tbl_Blog where DeleteFlag = 0
+
+update Tbl_Blog set BlogTitle = 'heehee2' where BlogId = 1
+update Tbl_Blog set DeleteFlag = 1 where BlogId = 2
+
+delete from Tbl_Blog where BlogId = 1
+
+
+
+
+
+-- Product Apple 1000, Orange 1000
+-- Staff Apple 2, Orange 1
+-- 3000, 2000, 1000
+
+```
+
