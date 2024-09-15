@@ -27,13 +27,21 @@ Console.WriteLine("Hello, World!");
 
 
 
-AdoDotNetExample adoDotNetExample = new AdoDotNetExample();
+//AdoDotNetExample adoDotNetExample = new AdoDotNetExample();
 //adoDotNetExample.Read();
 //adoDotNetExample.Create();
 //adoDotNetExample.Edit();
 //adoDotNetExample.Update();
-adoDotNetExample.Delete();
+//adoDotNetExample.Delete();
 
+//DapperExample dapperExample = new DapperExample();
+//dapperExample.Read();
+//dapperExample.Create("dafadfs", "dasdfasssf", "dfasf");
+//dapperExample.Edit(1);
+//dapperExample.Edit(2);
 
+EFCoreExample eFCoreExample = new EFCoreExample();
+//eFCoreExample.Read();
+eFCoreExample.Create("dafadfs", "dasdfasssf", "dfasf");
 
 Console.ReadKey();
