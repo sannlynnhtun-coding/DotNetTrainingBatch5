@@ -91,3 +91,7 @@ commit
 3 - mg mg 6
 4 - mg mg 4
 5 - mg mg 5
+
+efcore database first (manual, auto) / code first
+
+dotnet ef dbcontext scaffold "Server=.;Database=DotNetTrainingBatch5;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c AppDbContext -f
