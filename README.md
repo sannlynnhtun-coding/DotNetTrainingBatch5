@@ -95,3 +95,9 @@ commit
 efcore database first (manual, auto) / code first
 
 dotnet ef dbcontext scaffold "Server=.;Database=DotNetTrainingBatch5;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c AppDbContext -f
+
+API
+
+HttpMethod
+HttpStatusCode
+Request / Response
