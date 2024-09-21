@@ -67,3 +67,27 @@ delete from Tbl_Blog where BlogId = 1
 
 ```
 
+oracle
+
+select * from tbl_blog with (nolock)
+
+commit data / uncommit data
+
+insert into
+commit
+
+update tbl_blog
+commit
+
+1 - mg mg 1
+2 - mg mg 2
+3 - mg mg 3
+4 - mg mg 4
+5 - mg mg 5
+
+
+1 - mg mg 1
+2 - mg mg 2
+3 - mg mg 6
+4 - mg mg 4
+5 - mg mg 5
