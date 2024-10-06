@@ -101,3 +101,42 @@ API
 HttpMethod
 HttpStatusCode
 Request / Response
+
+
+
+
+-----------------------------
+
+5 weeks
+
+Visual Studio 2022 Installation
+Microsoft SQL Server 2022 
+SSMS (SQL Server Management System)
+
+C# Basic
+SQL Basic
+
+Console App (Create Project)
+DTO (data transfer object)
+Nuget Package
+ADO.NET
+Dapper
+- ORM
+- Data Model
+- AsNoTracking
+EFCore
+- AppDbContext
+- Database First
+REST API (ASP.NET Core Web API)
+- Swagger
+- Postman
+- Http Method
+- Http Status Code
+
+-----------------------------
+
+Backend API
+
+
+data model (data access, database) 10 columns
+view model (frontend return data) 2 columns

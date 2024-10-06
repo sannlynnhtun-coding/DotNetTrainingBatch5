@@ -23,7 +23,6 @@ namespace DotNetTrainingBatch5.RestApi.Controllers
             return Ok(lst);
         }
 
-
         [HttpGet("{id}")]
         public IActionResult GetBlog(int id)
         {

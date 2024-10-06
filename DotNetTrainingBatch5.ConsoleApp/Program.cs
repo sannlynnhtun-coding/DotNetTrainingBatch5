@@ -40,8 +40,11 @@ Console.WriteLine("Hello, World!");
 //dapperExample.Edit(1);
 //dapperExample.Edit(2);
 
-EFCoreExample eFCoreExample = new EFCoreExample();
-//eFCoreExample.Read();
-eFCoreExample.Create("dafadfs", "dasdfasssf", "dfasf");
+//EFCoreExample eFCoreExample = new EFCoreExample();
+////eFCoreExample.Read();
+//eFCoreExample.Create("dafadfs", "dasdfasssf", "dfasf");
+
+//string query = " [BlogAuthor] = @BlogAuthor, ";
+//Console.WriteLine(query.Substring(0, query.Length - 2));
 
 Console.ReadKey();
