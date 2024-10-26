@@ -238,6 +238,5 @@ namespace DotNetTrainingBatch5.ConsoleApp
                 Console.WriteLine("Successfully Deleted Blog!");
             }
         }
-
     }
 }

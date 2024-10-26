@@ -14,4 +14,8 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetTrainingBatch5.Shared\DotNetTrainingBatch5.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

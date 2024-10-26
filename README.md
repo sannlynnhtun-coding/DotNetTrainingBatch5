@@ -140,3 +140,26 @@ Backend API
 
 data model (data access, database) 10 columns
 view model (frontend return data) 2 columns
+
+-----------------------------
+
+
+- mssql basic
+- C# basic
+
+- console app
+- ado.net
+- dapper
+- efcore
+- efcore database first
+- northwind database
+- asp.net core web api
+- minimal api / [ado.net / dapper => custom service]
+
+.net 6
+.net 7
+
+.net core 3.1
+
+
+-----------------------------
