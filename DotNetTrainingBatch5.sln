@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetTrainingBatch5.RestAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.Shared", "DotNetTrainingBatch5.Shared\DotNetTrainingBatch5.Shared.csproj", "{DE8178E1-2354-4015-BA0D-AA832D5E280F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.MinimalApi", "DotNetTrainingBatch5.MinimalApi\DotNetTrainingBatch5.MinimalApi.csproj", "{EEA084BA-C5DB-45AC-99B9-E5F3F46255B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.BirdMinimalApi", "DotNetTrainingBatch5.BirdMinimalApi\DotNetTrainingBatch5.BirdMinimalApi.csproj", "{84C14D4F-4BD2-44DC-B71C-5A111D22F483}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{DE8178E1-2354-4015-BA0D-AA832D5E280F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE8178E1-2354-4015-BA0D-AA832D5E280F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE8178E1-2354-4015-BA0D-AA832D5E280F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEA084BA-C5DB-45AC-99B9-E5F3F46255B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA084BA-C5DB-45AC-99B9-E5F3F46255B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA084BA-C5DB-45AC-99B9-E5F3F46255B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA084BA-C5DB-45AC-99B9-E5F3F46255B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C14D4F-4BD2-44DC-B71C-5A111D22F483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C14D4F-4BD2-44DC-B71C-5A111D22F483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C14D4F-4BD2-44DC-B71C-5A111D22F483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C14D4F-4BD2-44DC-B71C-5A111D22F483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
