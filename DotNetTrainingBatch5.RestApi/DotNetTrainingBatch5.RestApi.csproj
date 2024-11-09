@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotNetTrainingBatch5.Database\DotNetTrainingBatch5.Database.csproj" />
+    <ProjectReference Include="..\DotNetTrainingBatch5.Domain\DotNetTrainingBatch5.Domain.csproj" />
   </ItemGroup>
 
 </Project>
