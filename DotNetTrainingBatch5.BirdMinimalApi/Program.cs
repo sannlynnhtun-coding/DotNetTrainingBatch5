@@ -64,6 +64,23 @@ app.MapGet("/birds/{id}", (int id) =>
 .WithName("GetBird")
 .WithOpenApi();
 
+app.MapPost("/birds", (BirdModel requestModel) =>
+{
+    string folderPath = "Data/Birds.json";
+    var jsonStr = File.ReadAllText(folderPath);
+    var result = JsonConvert.DeserializeObject<BirdResponseModel>(jsonStr)!;
+
+    requestModel.Id = result.Tbl_Bird.Count == 0 ? 1 : result.Tbl_Bird.Max(x => x.Id) + 1;
+    result.Tbl_Bird.Add(requestModel);
+
+    var jsonStrToWrite = JsonConvert.SerializeObject(result);
+    File.WriteAllText(folderPath, jsonStrToWrite);
+
+    return Results.Ok(requestModel);
+})
+.WithName("GetBird")
+.WithOpenApi();
+
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
@@ -74,7 +91,7 @@ internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary
 
 public class BirdResponseModel
 {
-    public BirdModel[] Tbl_Bird { get; set; }
+    public List<BirdModel> Tbl_Bird { get; set; }
 }
 
 public class BirdModel

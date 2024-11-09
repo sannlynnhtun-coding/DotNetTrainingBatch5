@@ -163,3 +163,8 @@ view model (frontend return data) 2 columns
 
 
 -----------------------------
+
+
+File.json
+
+File.json => Read => Convert Object [] => Insert => Json => Write
