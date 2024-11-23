@@ -1,7 +1,6 @@
-﻿namespace DotNetTrainingBatch5.Domain
-{
-    public class Class1
-    {
+﻿namespace DotNetTrainingBatch5.Domain;
 
-    }
+public class Class1
+{
+
 }
