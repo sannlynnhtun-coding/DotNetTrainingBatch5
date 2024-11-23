@@ -1,7 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DotNetTrainingBatch5.ConsoleApp;
-using System.Data;
-using System.Data.SqlClient;
 
 Console.WriteLine("Hello, World!");
 //Console.ReadLine();
