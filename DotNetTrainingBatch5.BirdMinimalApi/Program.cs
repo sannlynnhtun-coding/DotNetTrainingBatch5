@@ -42,7 +42,7 @@ app.MapGet("/birds", () =>
 {
     string folderPath = "Data/Birds.json";
     var jsonStr = File.ReadAllText(folderPath);
-    var result = JsonConvert.DeserializeObject<BirdResponseModel>(jsonStr)!;
+    var result = JsonConvert.DeserializeObject<BirdResponseModel>(jsonStr);
 
     return Results.Ok(result.Tbl_Bird);
 })
@@ -78,8 +78,61 @@ app.MapPost("/birds", (BirdModel requestModel) =>
 
     return Results.Ok(requestModel);
 })
-.WithName("GetBird")
+.WithName("CreateBird")
 .WithOpenApi();
+
+app.MapPut("/birds/{id}", (int id, BirdModel requestModel) =>
+{
+    string folderPath = "Data/Birds.json";
+    var jsonStr = File.ReadAllText(folderPath);
+    var result = JsonConvert.DeserializeObject<BirdResponseModel>(jsonStr);
+
+    var item = result.Tbl_Bird.FirstOrDefault(x => x.Id == id);
+    if (item is null) return Results.BadRequest("No Data Found");
+
+    var index = result.Tbl_Bird.FindIndex(x => x.Id == id);
+    if (index != -1)
+    {
+        //result.Tbl_Bird[index] = requestModel;
+        result.Tbl_Bird[index] = new BirdModel
+        {
+            Id = id,
+            BirdEnglishName = requestModel.BirdEnglishName,
+            BirdMyanmarName = requestModel.BirdMyanmarName,
+            Description = requestModel.Description,
+            ImagePath = requestModel.ImagePath
+        };
+    }
+    var jsonStrToWrite = JsonConvert.SerializeObject(result);
+    File.WriteAllText(folderPath, jsonStrToWrite);
+
+    return Results.Ok(result.Tbl_Bird[index]);
+
+})
+.WithName("UpdateBird")
+.WithOpenApi();
+
+app.MapDelete("birds/{id}", (int id) =>
+{
+    var folderPath = "Data/birds.json";
+    var jsonStr = File.ReadAllText(folderPath);
+    var result = JsonConvert.DeserializeObject<BirdResponseModel>(jsonStr);
+
+    var item = result.Tbl_Bird.FirstOrDefault(x => x.Id == id);
+    if (item is null) return Results.BadRequest("No Data Found");
+
+    result.Tbl_Bird.Remove(item);
+
+    var jsonStrToWrite = JsonConvert.SerializeObject(result);
+    File.WriteAllText(folderPath, jsonStrToWrite);
+
+    return Results.Ok(item);
+
+})
+    .WithName("DeleteBird")
+    .WithOpenApi();
+
+
 
 app.Run();
 
