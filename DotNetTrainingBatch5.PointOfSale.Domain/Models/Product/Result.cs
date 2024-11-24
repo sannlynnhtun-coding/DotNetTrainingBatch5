@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetTrainingBatch5.PointOfSale.Domain.Models
+namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
 {
     public class Result<T>
     {
@@ -16,9 +16,10 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models
 
         public bool IsSystemError { get { return Type == EnumRespType.SystemError; } }
 
-        public bool IsPending { get { return Type == EnumRespType.Pending; } }
+        public bool IsDataError { get { return Type == EnumRespType.Error; } }
 
         private EnumRespType Type { get; set; }
+
         public T Data { get; set; }
 
         public string Message { get; set; }
@@ -45,11 +46,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models
             };
         }
 
-        public static Result<T> ValidationError(string message)
-        {
-            return ValidationError(message, default);
-        }
-
         public static Result<T> SystemError(string message, T? data = default)
         {
             return new Result<T>()
@@ -61,19 +57,14 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models
             };
         }
 
-        public static Result<T> SystemError(string message)
-        {
-            return SystemError(message, default);
-        }
-
-        public static Result<T> Pending(string message = "Request is pending", T? data = default)
+        public static Result<T> Error(string message = "Some ErrorOccured", T? data = default)
         {
             return new Result<T>()
             {
                 IsSuccess = false,
                 Data = data,
                 Message = message,
-                Type = EnumRespType.Pending
+                Type = EnumRespType.Error
             };
         }
 
@@ -81,7 +72,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models
         {
             None,
             Success,
-            Pending,
+            Error,
             ValidationError,
             SystemError
         }
