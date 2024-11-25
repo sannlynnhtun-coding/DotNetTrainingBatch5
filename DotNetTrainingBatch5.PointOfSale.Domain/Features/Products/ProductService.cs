@@ -18,14 +18,66 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             _db = context;
         }
 
-        public async Task<Result<ResultProductResponseModel>> CreateProductAsync(int id, string productCode, string productName, decimal price)
+        public async Task<Result<List<ResultProductResponseModel>>> GetAllProductAsync()
         {
+            Result<List<ResultProductResponseModel>> model = new Result<List<ResultProductResponseModel>>();
+
+            var products = await _db.TblProducts.ToListAsync();
+
+            if (products is null)
+            {
+                model = Result<List<ResultProductResponseModel>>.SystemError("No Data Found");
+                return model;
+            }
+
+            var productResponseList = products.Select(product => new ResultProductResponseModel
+            {
+                Product = product
+            }).ToList();
+
+            model = Result<List<ResultProductResponseModel>>.Success(productResponseList, "Products retrieved successfully.");
+            return model;
+        }
+
+        public async Task<Result<ResultProductResponseModel>> UpdateProductAsync(int id, string productCode, string productName, decimal price)
+        {
+            
+            Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
+
+            
             var product = await _db.TblProducts.FirstOrDefaultAsync(x => x.ProductId == id);
 
+            
             if (product is null)
             {
-                return Result<ResultProductResponseModel>.SystemError("Failed to add the product");
+               
+                model = Result<ResultProductResponseModel>.SystemError("Product not found.");
+                return model;
             }
+
+            
+            product.ProductCode = productCode;
+            product.ProductName = productName;
+            product.Price = price;
+
+            
+            await _db.SaveChangesAsync();
+
+            
+            var responseModel = new ResultProductResponseModel
+            {
+                Product = product
+            };
+
+            
+            model = Result<ResultProductResponseModel>.Success(responseModel, "Product updated successfully.");
+            return model;
+        }
+
+        public async Task<Result<ResultProductResponseModel>> CreateProductAsync( string productCode, string productName, decimal price)
+        {
+            Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
+
 
             var newProduct = new TblProduct
             {
@@ -43,14 +95,10 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             {
                 Product = newProduct
             };
-            var model = Result<ResultProductResponseModel>.Success(item, "Success.");
+            model = Result<ResultProductResponseModel>.Success(item, "Success.");
 
+        Result:
             return model;
-        }
-
-        public async Task CreateProductAsync(string productCode, string? productName, ProductResModel reqModel)
-        {
-            throw new NotImplementedException();
         }
     }
 }

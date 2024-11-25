@@ -19,12 +19,27 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             _service = service;
         }
 
-        [HttpPost ("product")]
+        [HttpPost ("create")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductReqModel reqModel)
         {
             try
             {
-                var result = await _service.CreateProductAsync(reqModel.ProductId, reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                var result = await _service.CreateProductAsync( reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+        [HttpPatch("create")]
+        public async Task<IActionResult> EditProduct([FromBody] ProductReqModel reqModel)
+        {
+            try
+            {
+                var result = await _service.UpdateProductAsync(reqModel.ProductId,reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
                 return NoContent();
             }
             catch (ArgumentException ex)
