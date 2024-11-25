@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetTrainingBatch5.PointOfSale.Domain\DotNetTrainingBatch5.PointOfSale.Domain.csproj" />
+    <ProjectReference Include="..\DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.DataBase.csproj" />
+  </ItemGroup>
+
 </Project>

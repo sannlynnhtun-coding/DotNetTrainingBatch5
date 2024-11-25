@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.DataBase.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Features\SaleDetail\" />
     <Folder Include="Features\Sale\" />
     <Folder Include="Models\SaleDetail\" />
     <Folder Include="Models\Sale\" />
     <Folder Include="Models\ProductCategory\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.DataBase.csproj" />
   </ItemGroup>
 
 </Project>

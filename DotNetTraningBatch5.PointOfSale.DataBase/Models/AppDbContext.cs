@@ -23,14 +23,14 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<TblSaleDetail> TblSaleDetails { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            string connectionString = "Server=DESKTOP-KPCHONN\\SQLEXPRESS;Database=DotNetTrainning;User Id=sa;Password=sasa@123;TrustServerCertificate=True;";
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    if (!optionsBuilder.IsConfigured)
+    //    {
+    //        string connectionString = "Server=.;Database=PointOfSale;User Id=sa;Password=sasa@123;TrustServerCertificate=True;";
+    //        optionsBuilder.UseSqlServer(connectionString);
+    //    }
+    //}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblCategory>(entity =>
