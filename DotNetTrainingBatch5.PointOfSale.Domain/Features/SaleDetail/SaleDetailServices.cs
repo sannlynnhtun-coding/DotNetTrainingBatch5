@@ -53,70 +53,78 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.SaleDetail
 
         }
 
-        public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailAsync(ProductReqModel product, TblSale sale ) // need to change to SalereqModel
-        {
-            var detail = new TblSaleDetail { 
-                SaleCode = sale.SaleCode,
-                ProductCode = product.ProductCode,
-                ProductQuantity = Convert.ToInt32( sale.TotalSale/product.Price),
-                Total = sale.TotalSale
+       
+
+        //function to be edit for sale AMM
+        public async Task<string?> CreateShellSale() {
+            TblSale sale = new TblSale()
+            {
+                PayAmount = 0,
+                SaleDate = DateTime.Now,
+                ChangeAmount = 0,
+                TotalSale = 0
+
+
             };
 
-            await _appDb.TblSaleDetails.AddAsync(detail);
-           int result =  await _appDb.SaveChangesAsync();
-            if(result == 0) return Result<ResultSaleDetailResModel>.SystemError("Error Saving Detail");
-
-           
-
-
-            ResultSaleDetailResModel resultList = new ResultSaleDetailResModel() { SaleDeails = { detail } };
-            return Result<ResultSaleDetailResModel>.Success(resultList);
-
-
+            await _appDb.TblSales.AddAsync(sale);
+            int result = await _appDb.SaveChangesAsync();
+            if (result == 0) return null;
+           return sale.SaleCode;
+            // possible error for salecode return 
 
         }
+
         // assume in SALEDETAIL there is more than one product to sell and detail code for each bunch of product sell but the saleCode will be the same for each bunch of product sell (1-1)*-1
-        /* public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailAsync(List<ProductReqModel> product) // need to change to SalereqModel
-         {
-             TblSale sale = new TblSale();
+        public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailAsync(List<SaleProductReqModel> product) // need to change to SalereqModel
+         
+        {
+            // creating temporary shellcode
+            var ShellSaleCode = await CreateShellSale();
+            if(ShellSaleCode is null) return Result<ResultSaleDetailResModel>.InvalidDataError("Error Data Commuting");
+           
 
-             List<TblSaleDetail> newDetail = new List<TblSaleDetail>();
-             newDetail[0] = new TblSaleDetail()
-             {
-                 SaleCode = sale.SaleCode,
-                 ProductCode = product[0].ProductCode,
-                 ProductQuantity = product[0].InstockQuantity, // need to change the req model of product to 
-                 Total = product[0].Price* newDetail[0].ProductQuantity // checking needed
-             };
+            //Adding a list of product to detail 
+            List<TblSaleDetail> Detail = new List<TblSaleDetail>();
+             
 
-             foreach (var item in product) { 
-
+             foreach (var item in product) {
+                Detail.Add(
+                    new TblSaleDetail {
+                    ProductCode = item.ProductCode,
+                    SaleCode = ShellSaleCode,
+                    Total  =  item.Price * item.SaleQuantity,// price need to be careful for wrong entry
+                    ProductQuantity = item.SaleQuantity
+                    
+                    
+                    
+                    }
+                    
+                    
+                    );
 
              }
 
+             // possible action : take the saleDetail from this request to create a Sale by adding the amount of eact list to temporary shell Sale to make it official
 
-             var detail = new TblSaleDetail
-             {
-                 SaleCode = sale.SaleCode,
-                 ProductCode = product.ProductCode,
-                 ProductQuantity = Convert.ToInt32(sale.TotalSale / product.Price),
-                 Total = sale.TotalSale
-             };
 
-             await _appDb.TblSaleDetails.AddAsync(detail);
+
+             
+
+             await _appDb.TblSaleDetails.AddRangeAsync(Detail);
              int result = await _appDb.SaveChangesAsync();
              if (result == 0) return Result<ResultSaleDetailResModel>.SystemError("Error Saving Detail");
 
 
 
 
-             ResultSaleDetailResModel resultList = new ResultSaleDetailResModel() { SaleDeails = { detail } };
+             ResultSaleDetailResModel resultList = new ResultSaleDetailResModel() { SaleDeails = Detail  };
              return Result<ResultSaleDetailResModel>.Success(resultList);
 
 
 
          }
- */
+ 
 
         // write by taking normal perimeter
 
@@ -145,21 +153,38 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.SaleDetail
         }
         // assume in SALEDETAIL there is more than one product to sell and detail code for each bunch of product sell but the saleCode will be the same for each bunch of product sell (1-1)*-1
         //to update each detail calling detail code is sufficient and after update also make an update in SALE**
-        /*public async Task<Result<ResultSaleDetailResModel>?> UpdateSaleDetailAsync(int id,SaleDetailReqModel model) { 
+       public async Task<Result<ResultSaleDetailResModel>?> UpdateSaleDetailAsync(string detailcode,SaleDetailReqModel model) { 
         
-            var item =await _appDb.TblSaleDetails.Where(x=>x.DeleteFlag==false && x.DetailId==id).FirstOrDefaultAsync();
-            if(item == null) return Result<ResultSaleDetailResModel>.NotFoundError();
+            var detailItem =await _appDb.TblSaleDetails.AsNoTracking().Where(x=>x.DeleteFlag==false && x.DetailCode== detailcode).FirstOrDefaultAsync();
+            if(detailItem is null) return Result<ResultSaleDetailResModel>.NotFoundError();
+
+            decimal price = detailItem.Total/ detailItem.ProductQuantity;
+
+            // if for patch
+            detailItem.ProductQuantity = model.ProductQuantity;
+            // if for patch
+            detailItem.Total = price*model.ProductQuantity;
+            //if for patch
+            detailItem.SaleCode = model.SaleCode; // possile to change total in two Sale Tbl (minus from detailItem, add to model)
+
+            //function to change the Tbl_SAle total and the change done by taking the sale code 
+
+           // to change product code just delete and Minus Sale.Total
+           //when Deleted Chnage Sale.Total and effected columns
+
+            _appDb.Entry(detailItem).State = EntityState.Modified;
+            int result = await _appDb.SaveChangesAsync();
+
+            if (result is 0) { return Result<ResultSaleDetailResModel>.SystemError("Some Code Error Occur"); }
+
+             
+            return Result<ResultSaleDetailResModel>.Success(new ResultSaleDetailResModel { 
+            SaleDeails= { detailItem }
+            
+            });
 
 
-            var detail = new TblSaleDetail
-            {
-                SaleCode = model.SaleCode,
-                ProductCode = model.ProductCode,
-                ProductQuantity = Convert.ToInt32(sale.TotalSale / product.Price),
-                Total = sale.TotalSale
-            };
-
-        }*/
+        }
 
     }
 }
