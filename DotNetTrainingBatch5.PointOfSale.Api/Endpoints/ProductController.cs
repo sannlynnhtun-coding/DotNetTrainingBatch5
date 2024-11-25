@@ -19,9 +19,39 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             _service = service;
         }
 
-        [HttpGet ]
+        [HttpGet]
+        public async Task<IActionResult> GetProduct()
+        {
+            try
+            {
+                var result = await _service.GetProductsAsync();
+               
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
 
-        [HttpPost ("create")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            try
+            {
+                var result = await _service.GetProductAsync(id);
+                if (result is null) 
+                { 
+                    return NotFound("No data found");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+       [HttpPost ("create")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductReqModel reqModel)
         {
             try
@@ -42,6 +72,21 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             try
             {
                 var result = await _service.UpdateProductAsync(reqModel.ProductId,reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                var result = await _service.DeleteProductAsync(id);
+
                 return Ok(result);
             }
             catch (Exception ex)

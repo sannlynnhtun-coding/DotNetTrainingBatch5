@@ -12,46 +12,24 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
     public class ProductService
     {
         private readonly AppDbContext _db;
-        private TblProduct newProduct;
+      
 
         public ProductService(AppDbContext context)
         {
             _db = context;
         }
 
-        public async Task<Result<ResultProductResponseModel>> GetAllProductAsync(int id, TblProduct product)
+        public async Task<TblProduct?> GetProductAsync(int id)
         {
-            Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
+            var item = await _db.TblProducts.FirstOrDefaultAsync(u => u.ProductId == id);
+            return item;
 
+        }
 
-            var item = await _db.TblProducts.FirstOrDefaultAsync(x => x.ProductId == id);
-
-            if (item is null)
-            {
-                model = Result<ResultProductResponseModel>.SystemError("No Data Found");
-                goto Result;
-            }
-
-            //var newProduct = new TblProduct
-            //{
-            //    ProductCode = productCode,
-            //    ProductName = productName,
-            //    Price = price,
-            //    InstockQuantity = 0,
-            //    //DeleteFlag = false
-            //};
-
-            _db.TblProducts.Add(item);
-            await _db.SaveChangesAsync();
-
-            var getProduct = new ResultProductResponseModel
-            {
-                Product = newProduct
-            };
-            model = Result<ResultProductResponseModel>.Success(getProduct, "Success.");
-
-        Result:
-            return model;
+        public async Task<List<TblProduct>> GetProductsAsync()
+        {
+           var products =  await _db.TblProducts.AsNoTracking().ToListAsync();
+            return products;
         }
 
         public async Task<Result<ResultProductResponseModel>> UpdateProductAsync(int id, string productCode, string productName, decimal price)
@@ -89,6 +67,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             return model;
         }
 
+
         public async Task<Result<ResultProductResponseModel>> CreateProductAsync( string productCode, string productName, decimal price)
         {
             Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
@@ -120,6 +99,20 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
 
         
             return model;
+        }
+
+        public async Task<TblProduct?> DeleteProductAsync(int id)
+        {
+            var item = await _db.TblProducts.FirstOrDefaultAsync(x => x.ProductId == id);
+            if(item is null)
+            {
+                return null;
+            }
+
+            _db.TblProducts.Remove(item);
+            await _db.SaveChangesAsync();
+            return item;
+
         }
     }
 }
