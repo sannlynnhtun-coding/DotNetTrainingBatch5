@@ -12,30 +12,45 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
     public class ProductService
     {
         private readonly AppDbContext _db;
+        private TblProduct newProduct;
 
         public ProductService(AppDbContext context)
         {
             _db = context;
         }
 
-        public async Task<Result<List<ResultProductResponseModel>>> GetAllProductAsync()
+        public async Task<Result<ResultProductResponseModel>> GetAllProductAsync(int id, TblProduct product)
         {
-            Result<List<ResultProductResponseModel>> model = new Result<List<ResultProductResponseModel>>();
+            Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
 
-            var products = await _db.TblProducts.ToListAsync();
 
-            if (products is null)
+            var item = await _db.TblProducts.FirstOrDefaultAsync(x => x.ProductId == id);
+
+            if (item is null)
             {
-                model = Result<List<ResultProductResponseModel>>.SystemError("No Data Found");
-                return model;
+                model = Result<ResultProductResponseModel>.SystemError("No Data Found");
+                goto Result;
             }
 
-            var productResponseList = products.Select(product => new ResultProductResponseModel
-            {
-                Product = product
-            }).ToList();
+            //var newProduct = new TblProduct
+            //{
+            //    ProductCode = productCode,
+            //    ProductName = productName,
+            //    Price = price,
+            //    InstockQuantity = 0,
+            //    //DeleteFlag = false
+            //};
 
-            model = Result<List<ResultProductResponseModel>>.Success(productResponseList, "Products retrieved successfully.");
+            _db.TblProducts.Add(item);
+            await _db.SaveChangesAsync();
+
+            var getProduct = new ResultProductResponseModel
+            {
+                Product = newProduct
+            };
+            model = Result<ResultProductResponseModel>.Success(getProduct, "Success.");
+
+        Result:
             return model;
         }
 
@@ -78,6 +93,12 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
         {
             Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
 
+            if (productCode.Length > 4) 
+            {
+                model = Result<ResultProductResponseModel>.SystemError("ProductCode exceeds maximum length.");
+                return model;
+            }
+
 
             var newProduct = new TblProduct
             {
@@ -97,7 +118,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             };
             model = Result<ResultProductResponseModel>.Success(item, "Success.");
 
-        Result:
+        
             return model;
         }
     }
