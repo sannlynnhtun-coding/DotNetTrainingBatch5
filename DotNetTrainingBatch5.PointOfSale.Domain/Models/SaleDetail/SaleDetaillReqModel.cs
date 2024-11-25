@@ -15,8 +15,8 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.SaleDetail
         public string ProductCode { get; set; } = null!;
 
         public string SaleCode { get; set; } = null!;
+        public int ProductQuantity { get; set; }
 
-       
 
     }
 }

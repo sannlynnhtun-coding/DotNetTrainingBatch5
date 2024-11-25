@@ -18,6 +18,11 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
 
         public bool IsDataError { get { return Type == EnumRespType.Error; } }
 
+        public bool IsNotFound { get { return Type == EnumRespType.NotFound; } }
+        public bool IsDuplicateRecord {get { return Type == EnumRespType.DuplicateRecord; }}
+
+        public bool IsInvalidData { get { return Type == EnumRespType.InvalidData; } }
+
         private EnumRespType Type { get; set; }
 
         public T Data { get; set; }
@@ -75,6 +80,16 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
                 Data = data,
                 Message = message,
                 Type = EnumRespType.DuplicateRecord
+            };
+        }
+        public static Result<T> NotFoundError(string message = "NotFound Error Occured", T? data = default)
+        {
+            return new Result<T>()
+            {
+                IsSuccess = false,
+                Data = data,
+                Message = message,
+                Type = EnumRespType.NotFound
             };
         }
         public static Result<T> InvalidDataError(string message = "InvalidData Error Occured", T? data = default)
