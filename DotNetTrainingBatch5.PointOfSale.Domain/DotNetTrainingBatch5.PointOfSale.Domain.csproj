@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\SaleDetail\" />
     <Folder Include="Features\Sale\" />
-    <Folder Include="Models\SaleDetail\" />
     <Folder Include="Models\Sale\" />
     <Folder Include="Models\ProductCategory\" />
   </ItemGroup>

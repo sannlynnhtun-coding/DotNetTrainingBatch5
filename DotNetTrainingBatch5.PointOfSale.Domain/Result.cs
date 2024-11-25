@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
+namespace DotNetTrainingBatch5.PointOfSale.Domain
 {
     public class Result<T>
     {
@@ -67,14 +67,39 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
                 Type = EnumRespType.Error
             };
         }
-
+        public static Result<T> DuplicateRecordError(string message = "DuplicateRecord Error Occured", T? data = default)
+        {
+            return new Result<T>()
+            {
+                IsSuccess = false,
+                Data = data,
+                Message = message,
+                Type = EnumRespType.DuplicateRecord
+            };
+        }
+        public static Result<T> InvalidDataError(string message = "InvalidData Error Occured", T? data = default)
+        {
+            return new Result<T>()
+            {
+                IsSuccess = false,
+                Data = data,
+                Message = message,
+                Type = EnumRespType.InvalidData
+            };
+        }
         public enum EnumRespType
         {
-            None,
+            None, 
             Success,
-            Error,
-            ValidationError,
-            SystemError
+            Error, 
+            ValidationError, 
+            SystemError,
+            NotFound, 
+            DuplicateRecord, 
+          
+            InvalidData
+           
+
         }
     }
 }
