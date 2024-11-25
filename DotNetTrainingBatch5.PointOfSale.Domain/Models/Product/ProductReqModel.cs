@@ -22,4 +22,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
 
 
     }
+
+    
 }

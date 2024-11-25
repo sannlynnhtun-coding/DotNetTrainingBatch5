@@ -22,4 +22,6 @@ public partial class TblSaleDetail
     public virtual TblProduct ProductCodeNavigation { get; set; } = null!;
 
     public virtual TblSale SaleCodeNavigation { get; set; } = null!;
+
+    
 }
