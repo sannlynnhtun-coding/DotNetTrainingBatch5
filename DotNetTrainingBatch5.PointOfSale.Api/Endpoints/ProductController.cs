@@ -19,17 +19,34 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             _service = service;
         }
 
-        [HttpPost ("product")]
+        [HttpGet ]
+
+        [HttpPost ("create")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductReqModel reqModel)
         {
             try
             {
-                var result = await _service.CreateProductAsync(reqModel.ProductId, reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
-                return NoContent();
+                var result = await _service.CreateProductAsync( reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                return Ok(result);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
+
+
+        [HttpPatch]
+        public async Task<IActionResult> EditProduct([FromBody] ProductReqModel reqModel)
+        {
+            try
+            {
+                var result = await _service.UpdateProductAsync(reqModel.ProductId,reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
     }
