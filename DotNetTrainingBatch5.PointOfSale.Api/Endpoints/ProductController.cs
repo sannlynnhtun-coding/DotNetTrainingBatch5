@@ -20,11 +20,11 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
         }
 
         [HttpPost ("product")]
-        public async Task<IActionResult> CreateProduct(ProductReqModel reqModel)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductReqModel reqModel)
         {
             try
             {
-                var result = await _service.CreateProductAsync(reqModel);
+                var result = await _service.CreateProductAsync(reqModel.ProductId, reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
                 return NoContent();
             }
             catch (ArgumentException ex)
