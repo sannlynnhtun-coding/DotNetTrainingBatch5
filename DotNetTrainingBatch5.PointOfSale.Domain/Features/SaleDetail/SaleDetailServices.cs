@@ -232,11 +232,12 @@ public class SaleDetailServices
             {
                 var diff = detailItem.Total - oldTotal;
                 sale.TotalSale += diff;
+                sale.ChangeAmount -=diff;
                 _appDb.Entry(sale).State = EntityState.Modified;
             }
         }
 
-        // Save changes
+       
         _appDb.Entry(detailItem).State = EntityState.Modified;
         int result = await _appDb.SaveChangesAsync();
 
@@ -254,6 +255,46 @@ public class SaleDetailServices
 
     // to change product code just delete and Minus Sale.Total
     //when Deleted Chnage Sale.Total are effected columns
+
+
+    public async Task<Result<ResultSaleDetailResModel>?> DeleteSaleDetailAsync(string detailCode) { 
+    
+        var detailItem =await _appDb.TblSaleDetails.AsNoTracking().Where(x=>x.DetailCode == detailCode&& x.DeleteFlag == false).FirstOrDefaultAsync();
+
+        if (detailItem is null) return Result<ResultSaleDetailResModel>.NotFoundError();
+
+        detailItem.DeleteFlag = true;
+        _appDb.Entry(detailItem).State= EntityState.Modified;
+
+        // get sale through detailItem.SaleCode
+        var sale = await _appDb.TblSales.AsNoTracking().Where(x => x.SaleCode == detailItem.SaleCode) .FirstOrDefaultAsync();
+        if (sale is  null) return Result<ResultSaleDetailResModel>.SystemError("Error retriving Sale");
+
+        
+            sale.TotalSale -= detailItem.Total;
+            sale.ChangeAmount  =sale.PayAmount -sale.TotalSale;
+            _appDb.Entry(sale).State = EntityState.Modified;
+        
+        //subtract from Tblsale.total and change +
+
+
+
+
+
+        int result = await _appDb.SaveChangesAsync();
+        if (result == 0)
+            return Result<ResultSaleDetailResModel>.SystemError("An error occurred while deleting  sale details.");
+
+        return Result<ResultSaleDetailResModel>.Success(new ResultSaleDetailResModel
+        {
+            SaleDeails = new List<TblSaleDetail> { detailItem }
+        }
+                                    );
+
+
+
+
+    }
 
 }
 
