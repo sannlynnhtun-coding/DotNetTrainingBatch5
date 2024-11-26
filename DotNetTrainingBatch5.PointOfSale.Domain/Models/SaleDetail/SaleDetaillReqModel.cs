@@ -12,11 +12,12 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.SaleDetail
 
         public string? DetailCode { get; set; }
 
-        public string ProductCode { get; set; } = null!;
+        public string? ProductCode { get; set; } = "";
 
-        public string SaleCode { get; set; } = null!;
-        public int ProductQuantity { get; set; }
-      //  public decimal Total { get; set; }
+        public string? SaleCode { get; set; } = "";
+        public int ProductQuantity { get; set; } = 0;
+
+        public decimal Total { get; set; } = 0M;
 
 
     }
