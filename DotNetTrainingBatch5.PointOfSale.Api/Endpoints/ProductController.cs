@@ -30,7 +30,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new { error = ex.Message });
             }
         }
 
@@ -48,7 +48,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new { error = ex.Message });
             }
         }
        [HttpPost ("create")]
@@ -62,12 +62,13 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             catch (Exception ex)
             {
              
-                return StatusCode(500, "Internal Server Error.");
+                return StatusCode(500, new {error = ex.Message});
             }
         }
+    
+    
 
-
-        [HttpPatch]
+    [HttpPatch]
         public async Task<IActionResult> EditProduct([FromBody] ProductReqModel reqModel)
         {
             try
@@ -77,7 +78,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new { error = ex.Message });
             }
         }
 
@@ -92,7 +93,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new { error = ex.Message });
             }
         }
     }

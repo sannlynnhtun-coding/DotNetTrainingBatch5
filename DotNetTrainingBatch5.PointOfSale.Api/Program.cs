@@ -1,6 +1,7 @@
 using DotNetTrainingBatch5.PointOfSale.DataBase.Models;
 using DotNetTrainingBatch5.PointOfSale.Domain.Features.Products;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,20 @@ builder.Services.AddSwaggerGen();
 
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+string connectionString = builder.Configuration.GetConnectionString("DbConnection")!;
+
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    opt.UseSqlServer(connectionString);
+},
+ServiceLifetime.Transient,
+ServiceLifetime.Transient
+
+);
 
 builder.Services.AddScoped<ProductService>();
+
+
 
 var app = builder.Build();
 
