@@ -23,5 +23,18 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
 
     }
 
-    
+    public class SaleProductReqModel
+    {
+       
+
+        public string ProductCode { get; set; } = null!;
+
+        public decimal Price { get; set; } 
+
+        public int SaleQuantity { get; set; }
+
+
+
+    }
+
 }
