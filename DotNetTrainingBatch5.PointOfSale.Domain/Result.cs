@@ -19,7 +19,8 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
         public bool IsDataError { get { return Type == EnumRespType.Error; } }
 
         public bool IsNotFound { get { return Type == EnumRespType.NotFound; } }
-        public bool IsDuplicateRecord {get { return Type == EnumRespType.DuplicateRecord; }}
+
+        public bool IsDuplicateRecord { get { return Type == EnumRespType.DuplicateRecord; } }
 
         public bool IsInvalidData { get { return Type == EnumRespType.InvalidData; } }
 
@@ -39,7 +40,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
                 Message = message
             };
         }
-
         public static Result<T> ValidationError(string message, T? data = default)
         {
             return new Result<T>()
@@ -50,7 +50,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
                 Type = EnumRespType.ValidationError,
             };
         }
-
         public static Result<T> SystemError(string message, T? data = default)
         {
             return new Result<T>()
@@ -61,7 +60,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
                 Type = EnumRespType.SystemError,
             };
         }
-
         public static Result<T> Error(string message = "Some ErrorOccured", T? data = default)
         {
             return new Result<T>()
@@ -104,17 +102,14 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
         }
         public enum EnumRespType
         {
-            None, 
+            None,
             Success,
-            Error, 
-            ValidationError, 
+            Error,
+            ValidationError,
             SystemError,
-            NotFound, 
-            DuplicateRecord, 
-          
+            NotFound,
+            DuplicateRecord,
             InvalidData
-           
-
         }
     }
 }
