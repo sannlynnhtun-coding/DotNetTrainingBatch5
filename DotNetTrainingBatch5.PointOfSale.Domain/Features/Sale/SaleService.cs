@@ -115,7 +115,8 @@ public class SaleService
         _db.Entry(sale).State = EntityState.Modified;
         await _db.SaveChangesAsync();
 
-        response = Result<SaleResModel>.Success(sale, "Sale Deleted Successfully");
+        SaleResModel saleResModel = new SaleResModel { Sale = sale, };
+        response = Result<SaleResModel>.Success(saleResModel, "Sale Deleted Successfully");
 
     Result:
         return response;
