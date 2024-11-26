@@ -100,4 +100,24 @@ public class SaleService
         return response;
     }
 
+    public async Task<Result<SaleResModel>> DeleteSale(string saleCode)
+    {
+        Result<SaleResModel> response = new Result<SaleResModel>();
+
+        var sale = await _db.TblSales.AsNoTracking().Where(s => s.DeleteFlag == false && s.SaleCode == saleCode).FirstOrDefaultAsync();
+        if (sale is null)
+        {
+            response = Result<SaleResModel>.NotFoundError("Sale Not Found!");
+            goto Result;
+        }
+
+        sale.DeleteFlag = true;
+        _db.Entry(sale).State = EntityState.Modified;
+        await _db.SaveChangesAsync();
+
+        response = Result<SaleResModel>.Success(sale, "Sale Deleted Successfully");
+
+    Result:
+        return response;
+    }
 }
