@@ -59,7 +59,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             
             var responseModel = new ResultProductResponseModel
             {
-                Product = product
+                Product = new List<TblProduct?> { product }
             };
 
             
@@ -68,11 +68,11 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
         }
 
 
-        public async Task<Result<ResultProductResponseModel>> CreateProductAsync( string productCode, string productName, decimal price)
+        public async Task<Result<ResultProductResponseModel>> CreateProductAsync(string productCode, string productName, decimal price, int InstockQuantity)
         {
             Result<ResultProductResponseModel> model = new Result<ResultProductResponseModel>();
 
-            if (productCode.Length > 4) 
+            if (productCode.Length > 4)
             {
                 model = Result<ResultProductResponseModel>.SystemError("ProductCode exceeds maximum length.");
                 return model;
@@ -84,20 +84,20 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
                 ProductCode = productCode,
                 ProductName = productName,
                 Price = price,
-                InstockQuantity = 0,
-                //DeleteFlag = false
+                InstockQuantity = InstockQuantity,
+
             };
 
-            _db.TblProducts.Add(newProduct);
+            await _db.TblProducts.AddAsync(newProduct);
             await _db.SaveChangesAsync();
 
             var item = new ResultProductResponseModel
             {
-                Product = newProduct
+                Product = new List<TblProduct?> { newProduct }
             };
             model = Result<ResultProductResponseModel>.Success(item, "Success.");
 
-        
+
             return model;
         }
 
@@ -114,5 +114,49 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Products
             return item;
 
         }
+
+        //public async Task<Result<ResultProductResponseModel>> CreateProductAsync(string productCode, string productName, decimal price)
+        //{
+        //    // Validate inputs
+        //    if (string.IsNullOrWhiteSpace(productCode))
+        //        return Result<ResultProductResponseModel>.SystemError("ProductCode cannot be empty.");
+        //    if (productCode.Length > 4)
+        //        return Result<ResultProductResponseModel>.SystemError("ProductCode exceeds the maximum allowed length of 4 characters.");
+        //    if (string.IsNullOrWhiteSpace(productName))
+        //        return Result<ResultProductResponseModel>.SystemError("ProductName cannot be empty.");
+        //    if (price <= 0)
+        //        return Result<ResultProductResponseModel>.SystemError("Price must be greater than zero.");
+
+        //    try
+        //    {
+        //        // Create new product
+        //        var newProduct = new TblProduct
+        //        {
+        //            ProductCode = productCode,
+        //            ProductName = productName,
+        //            Price = price,
+        //            InstockQuantity = 0
+        //        };
+
+        //        _db.TblProducts.Add(newProduct);
+        //        await _db.SaveChangesAsync();
+
+        //        // Prepare response
+        //        var response = new ResultProductResponseModel
+        //        {
+        //            Product = new List<TblProduct?> { newProduct }
+        //        };
+        //        return Result<ResultProductResponseModel>.Success(response, "Product created successfully.");
+        //    }
+        //    catch (DbUpdateConcurrencyException ex)
+        //    {
+        //        return Result<ResultProductResponseModel>.SystemError($"Concurrency error: {ex.Message}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Result<ResultProductResponseModel>.SystemError($"Database error: {ex.Message}");
+        //    }
+        //}
+
     }
 }

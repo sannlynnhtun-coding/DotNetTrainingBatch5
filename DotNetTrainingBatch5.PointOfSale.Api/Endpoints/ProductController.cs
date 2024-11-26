@@ -56,12 +56,13 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
         {
             try
             {
-                var result = await _service.CreateProductAsync( reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                var result = await _service.CreateProductAsync( reqModel.ProductCode, reqModel.ProductName, reqModel.Price,reqModel.InstockQuantity );
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+             
+                return StatusCode(500, "Internal Server Error.");
             }
         }
 
