@@ -1,0 +1,202 @@
+﻿CREATE TABLE Tbl_Category (
+	CategoryID INT PRIMARY KEY IDENTITY(1, 1),
+	CategoryCode NVARCHAR(4) NOT NULL UNIQUE,
+	CategoryName VARCHAR(30) NOT NULL,
+	DeleteFlag BIT DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE Tbl_Product (
+	ProductId INT PRIMARY KEY IDENTITY(1,1),
+	ProductCode NVARCHAR(4) NOT NULL UNIQUE,
+	ProductName VARCHAR(50) NOT NULL,
+	Price DECIMAL(10, 2) NOT NULL,
+	InstockQuantity INT NOT NULL,
+	ProductCategoryCode NVARCHAR(4) FOREIGN KEY REFERENCES Tbl_Category(CategoryCode),
+	DeleteFlag BIT DEFAULT 0 NOT NULL
+);
+
+
+CREATE TABLE Tbl_Sale (
+	SaleId INT PRIMARY KEY IDENTITY(1, 1),
+	SaleCode NVARCHAR(4) NOT NULL UNIQUE,
+	SaleDate DATETIME DEFAULT GETDATE() NOT NULL,
+	TotalSale DECIMAL(15, 2) NOT NULL,
+	PayAmount DECIMAL(15, 2) NOT NULL,
+	ChangeAmount DECIMAL(10, 2),
+	DeleteFlag BIT DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE Tbl_SaleDetail (
+	DetailId INT PRIMARY KEY IDENTITY(1, 1),
+	DetailCode NVARCHAR(4),
+	ProductCode NVARCHAR(4) FOREIGN KEY REFERENCES Tbl_Product(ProductCode) NOT NULL,
+	ProductQuantity INT NOT NULL,
+	Total DECIMAL(15, 2) NOT NULL,
+	SaleCode NVARCHAR(4) FOREIGN KEY REFERENCES Tbl_Sale(SaleCode) NOT NULL,
+	DeleteFlag BIT DEFAULT 0 NOT NULL
+);
+
+DROP TABLE Tbl_SaleDetail;
+
+/* Product Code ID Auto Increase */
+CREATE FUNCTION dbo.GenerateProductCode()
+RETURNS NVARCHAR(4)
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    DECLARE @maxCode NVARCHAR(4);
+    DECLARE @nextCode INT;
+
+    SELECT @maxCode = MAX(ProductCode) FROM Tbl_Product;
+    
+    IF @maxCode IS NULL
+        SET @code = 'P001';
+    ELSE
+    BEGIN
+        SET @nextCode = CONVERT(INT, RIGHT(@maxCode, 3)) + 1;
+        SET @code = 'P' + RIGHT('000' + CONVERT(NVARCHAR(3), @nextCode), 3);
+    END
+
+    RETURN @code;
+END
+
+/* Category Code ID Auto Increase */
+CREATE FUNCTION dbo.GenerateCatetoryCode()
+RETURNS NVARCHAR(4)
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    DECLARE @maxCode NVARCHAR(4);
+    DECLARE @nextCode INT;
+
+    SELECT @maxCode = MAX(CategoryCode) FROM Tbl_Category;
+    
+    IF @maxCode IS NULL
+        SET @code = 'C001';
+    ELSE
+    BEGIN
+        SET @nextCode = CONVERT(INT, RIGHT(@maxCode, 3)) + 1;
+        SET @code = 'C' + RIGHT('000' + CONVERT(NVARCHAR(3), @nextCode), 3);
+    END
+
+    RETURN @code;
+END
+
+/* Sale Code ID Auto Increase */
+CREATE FUNCTION dbo.GenerateSaleCode()
+RETURNS NVARCHAR(4)
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    DECLARE @maxCode NVARCHAR(4);
+    DECLARE @nextCode INT;
+
+    SELECT @maxCode = MAX(SaleCode) FROM Tbl_Sale;
+    
+    IF @maxCode IS NULL
+        SET @code = 'S001';
+    ELSE
+    BEGIN
+        SET @nextCode = CONVERT(INT, RIGHT(@maxCode, 3)) + 1;
+        SET @code = 'S' + RIGHT('000' + CONVERT(NVARCHAR(3), @nextCode), 3);
+    END
+
+    RETURN @code;
+END
+
+/* SaleDetail Code ID Auto Increase */
+CREATE FUNCTION dbo.GenerateSaleDetailCode()
+RETURNS NVARCHAR(4)
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    DECLARE @maxCode NVARCHAR(4);
+    DECLARE @nextCode INT;
+
+    SELECT @maxCode = MAX(DetailCode) FROM Tbl_SaleDetail;
+    
+    IF @maxCode IS NOT NULL 
+
+    BEGIN
+    IF @maxCode IS NULL
+        SET @code = 'D001';
+    ELSE
+    BEGIN
+        SET @nextCode = CONVERT(INT, RIGHT(@maxCode, 3)) + 1;
+        SET @code = 'D' + RIGHT('000' + CONVERT(NVARCHAR(3), @nextCode), 3);
+    END
+    END
+
+    RETURN @code;
+END
+
+/* Triggers Functions */
+CREATE TRIGGER trg_GenerateProductCode
+ON Tbl_Product
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    SELECT @code = dbo.GenerateProductCode();
+    
+    INSERT INTO Tbl_Product (ProductCode, ProductName, Price, InstockQuantity, ProductCategoryCode, DeleteFlag)
+    SELECT @code, ProductName, Price, InstockQuantity, ProductCategoryCode, DeleteFlag
+    FROM inserted;
+END
+
+CREATE TRIGGER trg_GenerateCategoryCode
+ON Tbl_Category
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    SELECT @code = dbo.GenerateCategoryCode();
+    
+    INSERT INTO Tbl_Category (CategoryCode, CategoryName, DeleteFlag)
+    SELECT @code, CategoryName, DeleteFlag
+    FROM inserted;
+END
+
+CREATE TRIGGER trg_GenerateSaleCode
+ON Tbl_Sale
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    SELECT @code = dbo.GenerateSaleCode();
+    
+    INSERT INTO Tbl_Sale (SaleCode, SaleDate, TotalSale, PayAmount, ChangeAmount, DeleteFlag)
+    SELECT @code, SaleDate, TotalSale, PayAmount, ChangeAmount, DeleteFlag
+    FROM inserted;
+END
+
+CREATE TRIGGER trg_GenerateSaleDetailCode
+ON Tbl_SaleDetail
+INSTEAD OF INSERT
+AS
+BEGIN
+    DECLARE @code NVARCHAR(4);
+    SELECT @code = dbo.GenerateSaleDetailCode();
+    
+    INSERT INTO Tbl_SaleDetail (DetailCode, ProductCode, ProductQuantity, Total, SaleCode)
+    SELECT @code, ProductCode, ProductQuantity, Total, SaleCode
+    FROM inserted;
+END
+
+
+/*
+Detail => 
+ProductCode ProductQuantity Total
+001			3				10000
+002			3				10000
+003			3				10000
+							30000 <- total sale
+*/
+/*
+
+KKT - Category -> (CRUD)
+SEP - Product -> (CRUD), Get Products By CategoryCode, Get Products By CategoryName (create with CategoryCode)
+AMM - Sale -> (CRD), Get Sale By Month, By Sale Code, <Max Sale> (attach Sale Detail in GET)
+TRA - SaleDetail -> (CRUD), Get Detail By Sale, (create with SaleCode and ProductCode)
+
+*/
