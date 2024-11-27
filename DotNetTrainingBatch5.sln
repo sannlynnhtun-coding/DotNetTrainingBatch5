@@ -29,6 +29,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.PointOfSale.Domain", "DotNetTrainingBatch5.PointOfSale.Domain\DotNetTrainingBatch5.PointOfSale.Domain.csproj", "{A6DAC294-6F70-46FB-A678-712FB56C3D1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.PointOfSale.Api", "DotNetTrainingBatch5.PointOfSale.Api\DotNetTrainingBatch5.PointOfSale.Api.csproj", "{AD469345-48E3-4E70-8719-1C6914561052}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.ConsoleApp3", "DotNetTrainingBatch5.ConsoleApp3\DotNetTrainingBatch5.ConsoleApp3.csproj", "{7561E4B4-451E-497F-A0DA-0F7168492F9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +81,10 @@ Global
 		{AD469345-48E3-4E70-8719-1C6914561052}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD469345-48E3-4E70-8719-1C6914561052}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD469345-48E3-4E70-8719-1C6914561052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7561E4B4-451E-497F-A0DA-0F7168492F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7561E4B4-451E-497F-A0DA-0F7168492F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7561E4B4-451E-497F-A0DA-0F7168492F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7561E4B4-451E-497F-A0DA-0F7168492F9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
