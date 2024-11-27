@@ -21,8 +21,11 @@ public partial class TblProduct
 
     public bool DeleteFlag { get; set; }
 
-
+ 
     public virtual TblCategory? ProductCategoryCodeNavigation { get; set; }
 
     public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
+
+    [Timestamp]
+    public byte[]? RowVersion { get; set; }
 }

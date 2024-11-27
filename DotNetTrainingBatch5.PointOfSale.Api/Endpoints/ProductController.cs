@@ -51,6 +51,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
                 return StatusCode(500, new { error = ex.Message });
             }
         }
+
        [HttpPost ("create")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductReqModel reqModel)
         {
@@ -68,12 +69,12 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
     
     
 
-    [HttpPatch]
+        [HttpPatch]
         public async Task<IActionResult> EditProduct([FromBody] ProductReqModel reqModel)
         {
             try
             {
-                var result = await _service.UpdateProductAsync(reqModel.ProductId,reqModel.ProductCode, reqModel.ProductName, reqModel.Price);
+                var result = await _service.UpdateProductAsync(reqModel.ProductId,reqModel.ProductCode, reqModel.ProductName, reqModel.Price, reqModel.InstockQuantity);
                 return Ok(result);
             }
             catch (Exception ex)

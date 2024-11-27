@@ -12,7 +12,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
         public class ResultProductResponseModel
         {
 
-            public List<TblProduct?> Product { get; set; }
+            public TblProduct Product { get; set; }
 
         }
  
