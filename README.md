@@ -1,227 +1,189 @@
 # DotNetTrainingBatch5
 
-C# .NET
+## C# .NET
 
-C# Language
-.NET 
+### Languages and Frameworks
 
-Console App
-Windows Forms
-ASP.NET Core Web API
-ASP.NET Core Web MVC
-Blazor Web Assembly
-Blazor Web Server
+- **C# Language**
+- **.NET Framework** 
+  - Versions: 1, 2, 3, 3.5, 4, 4.5, 4.6, 4.7, 4.8 (Windows)
+- **.NET Core**
+  - Versions: 1, 2, 2.2, 3, 3.1 (VS2019, VS2022 - Windows, Linux, macOS)
+- **.NET**
+  - Versions: 5 (VS2019), 6 (VS2022), 7, 8 (Windows, Linux, macOS)
 
-.NET framework (1, 2, 3, 3.5, 4, 4.5, 4.6, 4.7, 4.8) windows
-.NET Core (1, 2, 2.2, 3, 3.1) vs2019, vs2022 - windows, linux, macos
-.NET (5 - vs2019, 6 - vs2022, 7, 8 - windows, linux, macos
+### Development Tools
 
-vscode
-visual studio 2022 
+- **Visual Studio Code**
+- **Visual Studio 2022**
 
-windows
+### Application Types
 
-UI + Business Logic + Data Access => Database
+- **Console App**
+- **Windows Forms**
+- **ASP.NET Core Web API**
+- **ASP.NET Core Web MVC**
+- **Blazor WebAssembly**
+- **Blazor Server**
 
-Kpay
+## Project Structure
 
-Mobile No => Transfer 
+### UI + Business Logic + Data Access => Database
 
-Mobile No Check
-10000
+## Example Projects
 
-SLH => Collin
+### Kpay
 
-10000 => 0
+#### Features:
 
--5000 => +5000
+- **Mobile No** => Transfer
+- **Mobile No Check**
+- **SLH** => **Collin**
+  - **10000 => 0**
+  - **-5000 => +5000**
+  - **Bank +5000**
 
-Bank + 5000
-
-SLHDotNetCore
+### SQL Scripts
 
 ```sql
-
-SELECT [BlogId]
-      ,[BlogTitle]
-      ,[BlogAuthor]
-      ,[BlogContent]
-  FROM [dbo].[Tbl_Blog]
+SELECT [BlogId], [BlogTitle], [BlogAuthor], [BlogContent]
+FROM [dbo].[Tbl_Blog]
 
 GO
 
-select * from Tbl_Blog where DeleteFlag = 0
+SELECT * FROM Tbl_Blog WHERE DeleteFlag = 0
 
-update Tbl_Blog set BlogTitle = 'heehee2' where BlogId = 1
-update Tbl_Blog set DeleteFlag = 1 where BlogId = 2
+UPDATE Tbl_Blog SET BlogTitle = 'heehee2' WHERE BlogId = 1
+UPDATE Tbl_Blog SET DeleteFlag = 1 WHERE BlogId = 2
 
-delete from Tbl_Blog where BlogId = 1
+DELETE FROM Tbl_Blog WHERE BlogId = 1
 
-
-
-
-
--- Product Apple 1000, Orange 1000
--- Staff Apple 2, Orange 1
--- 3000, 2000, 1000
-
+SELECT * FROM tbl_blog WITH (NOLOCK)
 ```
 
-oracle
+### Oracle Commands
 
-select * from tbl_blog with (nolock)
+```sql
 
-commit data / uncommit data
+-- Commit data
+INSERT INTO ...
+COMMIT
 
-insert into
-commit
+-- Update data
+UPDATE tbl_blog
+COMMIT
+```
 
-update tbl_blog
-commit
+## Entity Framework Core (EF Core)
 
-1 - mg mg 1
-2 - mg mg 2
-3 - mg mg 3
-4 - mg mg 4
-5 - mg mg 5
+- **Database First** (Manual, Auto)
+- **Code First**
 
-
-1 - mg mg 1
-2 - mg mg 2
-3 - mg mg 6
-4 - mg mg 4
-5 - mg mg 5
-
-efcore database first (manual, auto) / code first
-
+```sh
 dotnet ef dbcontext scaffold "Server=.;Database=DotNetTrainingBatch5;User Id=sa;Password=sasa@123;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c AppDbContext -f
+```
 
-API
+## API Development
 
-HttpMethod
-HttpStatusCode
-Request / Response
+- **HttpMethod**
+- **HttpStatusCode**
+- **Request / Response**
 
+## Training Schedule (5 weeks)
 
+1. **Visual Studio 2022 Installation**
+2. **Microsoft SQL Server 2022**
+3. **SSMS (SQL Server Management System)**
 
+### Topics Covered:
 
------------------------------
+- **C# Basic**
+- **SQL Basic**
+- **Console App** (Create Project)
+- **DTO (Data Transfer Object)**
+- **Nuget Package**
+- **ADO.NET**
+- **Dapper**
+  - ORM
+  - Data Model
+- **EFCore**
+  - AppDbContext
+  - Database First
+  - AsNoTracking
+- **REST API (ASP.NET Core Web API)**
+  - Swagger
+  - Postman
+  - Http Method
+  - Http Status Code
 
-5 weeks
+## Backend API Development
 
-Visual Studio 2022 Installation
-Microsoft SQL Server 2022 
-SSMS (SQL Server Management System)
+- **Data Model (Data Access, Database) 10 columns**
+- **View Model (Frontend Return Data) 2 columns**
 
-C# Basic
-SQL Basic
+## Further Topics
 
-Console App (Create Project)
-DTO (data transfer object)
-Nuget Package
-ADO.NET
-Dapper
-- ORM
-- Data Model
-- AsNoTracking
-EFCore
-- AppDbContext
-- Database First
-REST API (ASP.NET Core Web API)
-- Swagger
-- Postman
-- Http Method
-- Http Status Code
+- **MSSQL Basic**
+- **C# Basic**
+- **Console App**
+- **ADO.NET**
+- **Dapper**
+- **EFCore**
+- **EFCore Database First**
+- **Northwind Database**
+- **ASP.NET Core Web API**
+- **Minimal API** / [ADO.NET / Dapper => Custom Service]
 
------------------------------
+### Supported .NET Versions
 
-Backend API
+- **.NET 6**
+- **.NET 7**
+- **.NET Core 3.1**
 
+## File Operations
 
-data model (data access, database) 10 columns
-view model (frontend return data) 2 columns
+### File.json
 
------------------------------
+- Read File.json => Convert to Object [] => Insert => Json => Write
 
+## Kpay Application
 
-- mssql basic
-- C# basic
+### Features
 
-- console app
-- ado.net
-- dapper
-- efcore
-- efcore database first
-- northwind database
-- asp.net core web api
-- minimal api / [ado.net / dapper => custom service]
+- **Mobile No** => Transfer
+- **Id, FullName, MobileNo, Balance, Pin (000000)**
+- **Bank** => Deposit / Withdraw
 
-.net 6
-.net 7
+#### API Endpoints
 
-.net core 3.1
+1. **Deposit**
+   - **Deposit API** => MobileNo, Balance (+) => 1000 + (-1000)
 
+2. **Withdraw**
+   - **Withdraw API** => MobileNo, Balance (-) => 1000 - (-1000)
+   - Minimum balance 10,000 MMK
 
------------------------------
+3. **Transfer**
+   - **Transfer API**
+     - FromMobileNo, ToMobileNo, Amount, Pin, Notes
+     - FromMobile check
+     - ToMobileNo check
+     - FromMobileNo != ToMobileNo
+     - Pin == 
+     - Balance
+     - FromMobileNo Balance (-)
+     - ToMobileNo Balance (+)
+     - Message (Complete)
+     - Transaction History
 
+4. **Balance**
 
-File.json
+### User Management
 
-File.json => Read => Convert Object [] => Insert => Json => Write
-
-
------------------------------
-
-
-## Kpay
-
-Mobile No
-
-Me - Another One
-
-Id
-FullName
-MobileNo
-Balance
-Pin => 000000
-
-Bank => Deposit / Withdraw
-
-### Deposit
-
-Deposit API => MobileNo, Balance (+) => 1000 + (-1000)
-
-### Withdraw
-
-Withdraw API => MobileNo, Balance (+) => 1000 - (-1000)
-at least 10,000 MMK
-
-### Transfer 
-
-Transfer API => 
-
-FromMobileNo
-ToMobileNo
-Amount
-Pin
-Notes
-
-- FromMobile check
-- ToMobileNo check
-- FromMobileNo != ToMobileNo
-- Pin ==
-- Balance
-- FromMobileNo Balance -
-- ToMobileNo Balance +
-- Message (Complete)
-- Transaction History
-
-- Balance
-
-- Create Wallet User
-- Login
-- Change Pin
-- Phone No Change
-- Forget Password
-- Reset Password
-- First Time Login
+- **Create Wallet User**
+- **Login**
+- **Change Pin**
+- **Phone No Change**
+- **Forget Password**
+- **Reset Password**
+- **First Time Login**
