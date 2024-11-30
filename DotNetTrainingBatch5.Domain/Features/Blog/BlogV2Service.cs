@@ -1,21 +1,17 @@
 ﻿using DotNetTrainingBatch5.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DotNetTrainingBatch5.Domain.Features.Blog;
 
-// Business Logic + DataAccess
-public class BlogService : IBlogService
+public class BlogV2Service : IBlogService
 {
     private readonly AppDbContext _db;
+    private readonly BlogService _blogService;
 
-    public BlogService(AppDbContext db)
+    public BlogV2Service(AppDbContext db, BlogService blogService)
     {
         _db = db;
+        _blogService = blogService;
     }
 
     public List<TblBlog> GetBlogs()
