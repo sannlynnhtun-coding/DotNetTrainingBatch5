@@ -16,13 +16,14 @@ public class SaleDetailServices
 {
     private readonly AppDbContext _appDb = new AppDbContext();
 
-   public async Task<Result<ResultSaleDetailResModel>?> GetSaleDetailAsync() {
-         
-    var itemList = await _appDb.TblSaleDetails.Where(x=>x.DeleteFlag == false).ToListAsync();
-        
+    public async Task<Result<ResultSaleDetailResModel>> GetSaleDetailAsync()
+    {
+
+        var itemList = await _appDb.TblSaleDetails.Where(x => x.DeleteFlag == false).ToListAsync();
+
         if (itemList.Count == 0 || itemList is null) return Result<ResultSaleDetailResModel>.NotFoundError();
 
-        ResultSaleDetailResModel result = new ResultSaleDetailResModel() { SaleDeails = itemList};
+        ResultSaleDetailResModel result = new ResultSaleDetailResModel() { SaleDeails = itemList };
         return Result<ResultSaleDetailResModel>.Success(result);
 
 
@@ -45,7 +46,7 @@ public class SaleDetailServices
     public async Task<Result<ResultSaleDetailResModel>?> GetSaleDetailByCodeAsync(string code)
     {
 
-        var itemList = await _appDb.TblSaleDetails.Where(x => x.DeleteFlag == false &&( x.DetailCode == code || x.ProductCode == code || x.SaleCode == code)).ToListAsync();
+        var itemList = await _appDb.TblSaleDetails.Where(x => x.DeleteFlag == false && (x.DetailCode == code || x.ProductCode == code || x.SaleCode == code)).ToListAsync();
         if (itemList.Count == 0 || itemList is null) return Result<ResultSaleDetailResModel>.NotFoundError();
 
         ResultSaleDetailResModel resultList = new ResultSaleDetailResModel() { SaleDeails = itemList };
@@ -55,10 +56,11 @@ public class SaleDetailServices
 
     }
 
-   
+
 
     //function to be edit for sale AMM
-    public async Task<SaleReqModel?> CreateShellSaleAsync() {
+    public async Task<SaleReqModel?> CreateShellSaleAsync()
+    {
         TblSale sale = new TblSale()
         {
             PayAmount = 0,
@@ -72,20 +74,21 @@ public class SaleDetailServices
         await _appDb.TblSales.AddAsync(sale);
         int result = await _appDb.SaveChangesAsync();
         if (result == 0) return null;
-        
-       return new SaleReqModel { 
-       SaleCode = sale.SaleCode,
-       PayAmount = sale.PayAmount
-       };
+
+        return new SaleReqModel
+        {
+            SaleCode = sale.SaleCode,
+            PayAmount = sale.PayAmount
+        };
         // possible error for salecode return 
 
     }
     // need to be in SALE services
-   
+
 
     // assume in SALEDETAIL there is more than one product to sell and detail code for each bunch of product sell but the saleCode will be the same for each bunch of product sell (1,1)*,1
-  
-    public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailFromOneProductAsync(SaleProductReqModel product,SaleDetailReqModel saleReq) // for one product
+
+    public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailFromOneProductAsync(SaleProductReqModel product, SaleDetailReqModel saleReq) // for one product
 
     {
         // creating temporary shellcode
@@ -110,15 +113,15 @@ public class SaleDetailServices
 
         //using the shell salecode to add data a sale
 
-        var SaleItem =await _appDb.TblSales.AsNoTracking().Where(x=>x.SaleCode==Detail.SaleCode && !x.DeleteFlag).FirstOrDefaultAsync();
+        var SaleItem = await _appDb.TblSales.AsNoTracking().Where(x => x.SaleCode == Detail.SaleCode && !x.DeleteFlag).FirstOrDefaultAsync();
         if (SaleItem is null) return Result<ResultSaleDetailResModel>.SystemError("Error retriving Sale");
 
         SaleItem.TotalSale += Detail.Total;
-        
+
         _appDb.Entry(SaleItem).State = EntityState.Modified;
-       result = await _appDb.SaveChangesAsync ();
+        result = await _appDb.SaveChangesAsync();
         if (result == 0) return Result<ResultSaleDetailResModel>.SystemError("Error adding Saledetail to  Sale");
-       
+
 
 
 
@@ -132,7 +135,7 @@ public class SaleDetailServices
 
     // write by taking normal perimeter
 
-    public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailAsync(string saleCode,string productCode,int quantity,decimal Price) 
+    public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailAsync(string saleCode, string productCode, int quantity, decimal Price)
     {
         var detail = new TblSaleDetail
         {
@@ -173,7 +176,7 @@ public class SaleDetailServices
 
     public async Task<Result<ResultSaleDetailResModel>?> UpdateSaleDetailAsync(string detailcode, SaleDetailReqModel model)
     {
-        
+
         var detailItem = await _appDb.TblSaleDetails.AsNoTracking().Where(x => !x.DeleteFlag && x.DetailCode == detailcode).FirstOrDefaultAsync();
         if (detailItem is null) return Result<ResultSaleDetailResModel>.NotFoundError();
 
@@ -232,20 +235,22 @@ public class SaleDetailServices
             {
                 var diff = detailItem.Total - oldTotal;
                 sale.TotalSale += diff;
-                sale.ChangeAmount -=diff;
+                sale.ChangeAmount -= diff;
                 _appDb.Entry(sale).State = EntityState.Modified;
             }
         }
 
-       
+
         _appDb.Entry(detailItem).State = EntityState.Modified;
         int result = await _appDb.SaveChangesAsync();
 
         if (result == 0)
             return Result<ResultSaleDetailResModel>.SystemError("An error occurred while updating sale details.");
 
-        return Result<ResultSaleDetailResModel>.Success(new ResultSaleDetailResModel{ 
-                                    SaleDeails = new List<TblSaleDetail> { detailItem }}
+        return Result<ResultSaleDetailResModel>.Success(new ResultSaleDetailResModel
+        {
+            SaleDeails = new List<TblSaleDetail> { detailItem }
+        }
                                     );
     }
 
@@ -257,24 +262,25 @@ public class SaleDetailServices
     //when Deleted Chnage Sale.Total are effected columns
 
 
-    public async Task<Result<ResultSaleDetailResModel>?> DeleteSaleDetailAsync(string detailCode) { 
-    
-        var detailItem =await _appDb.TblSaleDetails.AsNoTracking().Where(x=>x.DetailCode == detailCode&& x.DeleteFlag == false).FirstOrDefaultAsync();
+    public async Task<Result<ResultSaleDetailResModel>?> DeleteSaleDetailAsync(string detailCode)
+    {
+
+        var detailItem = await _appDb.TblSaleDetails.AsNoTracking().Where(x => x.DetailCode == detailCode && x.DeleteFlag == false).FirstOrDefaultAsync();
 
         if (detailItem is null) return Result<ResultSaleDetailResModel>.NotFoundError();
 
         detailItem.DeleteFlag = true;
-        _appDb.Entry(detailItem).State= EntityState.Modified;
+        _appDb.Entry(detailItem).State = EntityState.Modified;
 
         // get sale through detailItem.SaleCode
-        var sale = await _appDb.TblSales.AsNoTracking().Where(x => x.SaleCode == detailItem.SaleCode) .FirstOrDefaultAsync();
-        if (sale is  null) return Result<ResultSaleDetailResModel>.SystemError("Error retriving Sale");
+        var sale = await _appDb.TblSales.AsNoTracking().Where(x => x.SaleCode == detailItem.SaleCode).FirstOrDefaultAsync();
+        if (sale is null) return Result<ResultSaleDetailResModel>.SystemError("Error retriving Sale");
 
-        
-            sale.TotalSale -= detailItem.Total;
-            sale.ChangeAmount  =sale.PayAmount -sale.TotalSale;
-            _appDb.Entry(sale).State = EntityState.Modified;
-        
+
+        sale.TotalSale -= detailItem.Total;
+        sale.ChangeAmount = sale.PayAmount - sale.TotalSale;
+        _appDb.Entry(sale).State = EntityState.Modified;
+
         //subtract from Tblsale.total and change +
 
 
