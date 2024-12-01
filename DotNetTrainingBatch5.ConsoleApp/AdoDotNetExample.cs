@@ -2,7 +2,7 @@
 
 public class AdoDotNetExample
 {
-    private readonly string _connectionString = "Data Source=.;Initial Catalog=DotNetTrainingBatch5;User ID=sa;Password=sasa@123;";
+    private readonly string _connectionString = AppSettings.ConnectionString;
 
     public void Read()
     {

@@ -1,7 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DotNetTrainingBatch5.ConsoleApp;
+using Microsoft.Extensions.DependencyInjection;
 
-Console.WriteLine("Hello, World!");
+//Console.WriteLine("Hello, World!");
 //Console.ReadLine();
 
 // md => markdown
@@ -45,7 +46,14 @@ Console.WriteLine("Hello, World!");
 //string query = " [BlogAuthor] = @BlogAuthor, ";
 //Console.WriteLine(query.Substring(0, query.Length - 2));
 
-DapperExample2 dapperExample2 = new DapperExample2();
-dapperExample2.Read();
+//DapperExample2 dapperExample2 = new DapperExample2();
+//dapperExample2.Read();
+
+var services = new ServiceCollection()
+    .AddSingleton<AdoDotNetExample>()
+    .BuildServiceProvider();
+
+var adoDotNetExample = services.GetRequiredService<AdoDotNetExample>();
+adoDotNetExample.Read();
 
 Console.ReadKey();
