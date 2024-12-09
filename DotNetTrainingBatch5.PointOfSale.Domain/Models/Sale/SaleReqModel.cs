@@ -15,9 +15,9 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Sale
 
         public decimal TotalSale { get; set; } = 0M;
 
-        public decimal PayAmount { get; set; } = 0M;
+        /*public decimal PayAmount { get; set; } = 0M;
 
-        public decimal ChangeAmount { get { return TotalSale - PayAmount; } }
+        public decimal ChangeAmount { get { return TotalSale - PayAmount; } }*/
 
         //public static decimal calculateTotalSale(List<TblSaleDetail> saleDetails)
         //{

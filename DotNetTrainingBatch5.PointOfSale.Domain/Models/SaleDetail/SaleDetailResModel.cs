@@ -10,11 +10,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.SaleDetail
     public class SaleDetailResModel
     {
 
-        public List<TblSaleDetail> SaleDeails { get; set; }
-    }
-    public class ResultSaleDetailResModel
-    {
-
-        public List<TblSaleDetail> SaleDeails { get; set; }
+   
     }
 }

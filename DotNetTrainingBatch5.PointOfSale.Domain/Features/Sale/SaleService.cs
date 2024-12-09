@@ -11,7 +11,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.Sale;
 
 public class SaleService
 {
-    private readonly AppDbContext _db;
+   /* private readonly AppDbContext _db;
 
     public SaleService()
     {
@@ -192,5 +192,5 @@ public class SaleService
     Result:
         return response;
     }
-
+*/
 }

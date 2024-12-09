@@ -14,7 +14,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Features.SaleDetail;
 
 public class SaleDetailServices
 {
-    private readonly AppDbContext _appDb = new AppDbContext();
+    /*private readonly AppDbContext _appDb = new AppDbContext();
 
     public async Task<Result<ResultSaleDetailResModel>> GetSaleDetailAsync()
     {
@@ -297,7 +297,7 @@ public class SaleDetailServices
 
 
 
-    }
+    }*/
 
 }
 

@@ -17,8 +17,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
 
         public decimal Price { get; set; }
 
-        public int InstockQuantity { get; set; }
-
+       
 
 
     }

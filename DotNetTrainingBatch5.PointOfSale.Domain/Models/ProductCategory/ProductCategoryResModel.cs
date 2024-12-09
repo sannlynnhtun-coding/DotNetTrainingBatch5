@@ -9,6 +9,6 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.ProductCategory
 {
     public class ResultCategoryResModel
     {
-        public TblCategory Category { get; set; }
+       
     }
 }
