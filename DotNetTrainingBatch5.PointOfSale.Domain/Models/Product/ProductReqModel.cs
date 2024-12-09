@@ -29,7 +29,7 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Product
 
         public string ProductCode { get; set; } = null!;
 
-        public decimal Price { get; set; } 
+        public decimal Price { get; set; } =0M;
 
         public int SaleQuantity { get; set; }
 

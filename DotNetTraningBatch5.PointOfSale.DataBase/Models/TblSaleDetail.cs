@@ -17,11 +17,9 @@ public partial class TblSaleDetail
 
     public string SaleCode { get; set; } = null!;
 
-    public bool DeleteFlag { get; set; }
+    public bool DeleteFlag { get; set; }=false;
 
     public virtual TblProduct ProductCodeNavigation { get; set; } = null!;
 
     public virtual TblSale SaleCodeNavigation { get; set; } = null!;
-
-    
 }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace DotNetTrainingBatch5.PointOfSale.DataBase.Models;
 
 public partial class TblProduct
 {
-   
     public int ProductId { get; set; }
 
     public string ProductCode { get; set; } = null!;
@@ -21,11 +19,7 @@ public partial class TblProduct
 
     public bool DeleteFlag { get; set; }
 
- 
     public virtual TblCategory? ProductCategoryCodeNavigation { get; set; }
 
     public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
-
-    [Timestamp]
-    public byte[]? RowVersion { get; set; }
 }

@@ -14,18 +14,18 @@ builder.Services.AddSwaggerGen();
 
 
 // Add services to the container.
-string connectionString = builder.Configuration.GetConnectionString("DbConnection")!;
+//string connectionString = builder.Configuration.GetConnectionString("DbConnection")!;
 
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
-    opt.UseSqlServer(connectionString);
-},
-ServiceLifetime.Transient,
-ServiceLifetime.Transient
+//builder.Services.AddDbContext<AppDbContext>(opt =>
+//{
+//    opt.UseSqlServer(connectionString);
+//},
+//ServiceLifetime.Transient,
+//ServiceLifetime.Transient
 
-);
+//);
 
-builder.Services.AddScoped<ProductService>();
+//builder.Services.AddScoped<ProductService>();
 
 
 

@@ -25,8 +25,8 @@ namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints
             try
             {
                 var result = await _service.GetProductsAsync();
-               
-                return Ok(result);
+
+            return Ok(result);
             }
             catch (Exception ex)
             {

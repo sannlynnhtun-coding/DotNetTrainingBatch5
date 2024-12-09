@@ -11,24 +11,24 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Sale
     {
         public string? SaleCode { get; set; } = null;
 
-        public DateTime? SaleDate { get; set; }
+        public DateTime? SaleDate { get; set; }=DateTime.MinValue;
 
-        public decimal? TotalSale { get; set; }
+        public decimal TotalSale { get; set; } = 0M;
 
-        public decimal? PayAmount { get; set; }
+        public decimal PayAmount { get; set; } = 0M;
 
-        public decimal? ChangeAmount { get { return TotalSale - PayAmount; } }
+        public decimal ChangeAmount { get { return TotalSale - PayAmount; } }
 
-        public static decimal calculateTotalSale(List<TblSaleDetail> saleDetails)
-        {
-            decimal totalSale = 0;
+        //public static decimal calculateTotalSale(List<TblSaleDetail> saleDetails)
+        //{
+        //    decimal totalSale = 0;
 
-            foreach (var i in saleDetails)
-            {
-                totalSale += i.Total;
-            }
+        //    foreach (var i in saleDetails)
+        //    {
+        //        totalSale += i.Total;
+        //    }
 
-            return totalSale;
-        }
+        //    return totalSale;
+        //}
     }
 }

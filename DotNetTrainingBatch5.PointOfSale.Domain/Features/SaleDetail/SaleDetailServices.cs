@@ -55,71 +55,68 @@ public class SaleDetailServices
 
     }
 
-   
 
-    //function to be edit for sale AMM
-    public async Task<SaleReqModel?> CreateShellSaleAsync() {
-        TblSale sale = new TblSale()
-        {
-            PayAmount = 0,
-            SaleDate = DateTime.Now,
-            ChangeAmount = 0,
-            TotalSale = 0
-
-
-        };
-
-        await _appDb.TblSales.AddAsync(sale);
-        int result = await _appDb.SaveChangesAsync();
-        if (result == 0) return null;
-        
-       return new SaleReqModel { 
-       SaleCode = sale.SaleCode,
-       PayAmount = sale.PayAmount
-       };
-        // possible error for salecode return 
-
+    public async Task<TblProduct?> getProduct(string code = null) { 
+    var prod=await _appDb.TblProducts.FirstOrDefaultAsync(x=>x.ProductCode == code);
+        if (prod == null) return null;
+        return prod;
+    
+    
     }
-    // need to be in SALE services
-   
+
+
 
     // assume in SALEDETAIL there is more than one product to sell and detail code for each bunch of product sell but the saleCode will be the same for each bunch of product sell (1,1)*,1
+
+    public async Task<int> AddtosaleAsync(TblSaleDetail Detail, SaleReqModel?
+        saleReq)
+    {
+
+
+        var SaleItem = await _appDb.TblSales.AsNoTracking().Where(x => x.SaleCode == Detail.SaleCode && !x.DeleteFlag).FirstOrDefaultAsync();
+        if (SaleItem is null) return 0;
+
+        SaleItem.TotalSale += Detail.Total;
+        SaleItem.PayAmount =Convert.ToDecimal( saleReq.PayAmount);
+        SaleItem.ChangeAmount = Convert.ToDecimal( saleReq.ChangeAmount);
+
+        _appDb.Entry(SaleItem).State = EntityState.Modified;
+        int result = await _appDb.SaveChangesAsync();
+        if (result == 0) return 0;
+        return result;
+    }
   
-    public async Task<Result<ResultSaleDetailResModel>?> CreateSaleDetailFromOneProductAsync(SaleProductReqModel product,SaleDetailReqModel saleReq) // for one product
+    public async Task<Result<ResultSaleDetailResModel>> CreateSaleDetailFromOneProductAsync(SaleProductReqModel product,SaleReqModel?
+        saleReq = null) // for one product
 
     {
-        // creating temporary shellcode
-        //var saleReq = await CreateShellSale();
+      
         if (saleReq is null) return Result<ResultSaleDetailResModel>.InvalidDataError("Error Data Commuting");
 
 
-        //Adding a  of product to detail 
+        
         TblSaleDetail Detail = new TblSaleDetail()
         {
             ProductCode = product.ProductCode,
             SaleCode = saleReq.SaleCode,
             Total = product.Price * product.SaleQuantity,// price need to be careful for wrong entry
-            ProductQuantity = product.SaleQuantity
+            ProductQuantity = product.SaleQuantity,
+            
 
 
 
         };
-        await _appDb.TblSaleDetails.AddAsync(Detail);
+        if (Detail.ProductQuantity < 1) return Result<ResultSaleDetailResModel>.BadRequestError();
+        var re =   await _appDb.TblSaleDetails.AddAsync(Detail);
+
         int result = await _appDb.SaveChangesAsync();
         if (result == 0) return Result<ResultSaleDetailResModel>.SystemError("Error Saving Detail");
 
-        //using the shell salecode to add data a sale
 
-        var SaleItem =await _appDb.TblSales.AsNoTracking().Where(x=>x.SaleCode==Detail.SaleCode && !x.DeleteFlag).FirstOrDefaultAsync();
-        if (SaleItem is null) return Result<ResultSaleDetailResModel>.SystemError("Error retriving Sale");
 
-        SaleItem.TotalSale += Detail.Total;
-        
-        _appDb.Entry(SaleItem).State = EntityState.Modified;
-       result = await _appDb.SaveChangesAsync ();
+
+        result =await AddtosaleAsync(Detail,saleReq);
         if (result == 0) return Result<ResultSaleDetailResModel>.SystemError("Error adding Saledetail to  Sale");
-       
-
 
 
 
