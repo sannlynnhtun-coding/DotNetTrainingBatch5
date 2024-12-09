@@ -115,9 +115,7 @@ BEGIN
 
     SELECT @maxCode = MAX(DetailCode) FROM Tbl_SaleDetail;
     
-    IF @maxCode IS NOT NULL 
-
-    BEGIN
+   
     IF @maxCode IS NULL
         SET @code = 'D001';
     ELSE
@@ -125,8 +123,7 @@ BEGIN
         SET @nextCode = CONVERT(INT, RIGHT(@maxCode, 3)) + 1;
         SET @code = 'D' + RIGHT('000' + CONVERT(NVARCHAR(3), @nextCode), 3);
     END
-    END
-
+    
     RETURN @code;
 END
 

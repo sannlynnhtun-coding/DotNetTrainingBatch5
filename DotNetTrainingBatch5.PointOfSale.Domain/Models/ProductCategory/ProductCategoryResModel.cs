@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.SaleDetail
+namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.ProductCategory
 {
-    public class SaleDetailResModel
+    public class ResultCategoryResModel
     {
-
-   
+       
     }
 }
