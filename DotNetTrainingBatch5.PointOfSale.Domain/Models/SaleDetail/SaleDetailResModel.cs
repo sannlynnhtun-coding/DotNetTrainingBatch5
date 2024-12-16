@@ -1,4 +1,4 @@
-﻿using DotNetTrainingBatch5.PointOfSale.DataBase.Models;
+﻿using DotNetTrainingBatch5.PointOfSale.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

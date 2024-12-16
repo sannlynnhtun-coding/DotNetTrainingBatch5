@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.DataBase.csproj" />
+    <ProjectReference Include="..\DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.Database.csproj" />
   </ItemGroup>
 
 </Project>

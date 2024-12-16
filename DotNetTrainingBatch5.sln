@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.BirdMi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.Domain", "DotNetTrainingBatch5.Domain\DotNetTrainingBatch5.Domain.csproj", "{5B466E6B-BB4A-4845-B585-6D09DF5946D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.PointOfSale.DataBase", "DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.DataBase.csproj", "{26B5CE49-C5B8-460C-9076-C1F5EAD13F1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.PointOfSale.Database", "DotNetTraningBatch5.PointOfSale.DataBase\DotNetTrainingBatch5.PointOfSale.Database.csproj", "{26B5CE49-C5B8-460C-9076-C1F5EAD13F1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTrainingBatch5.PointOfSale.Domain", "DotNetTrainingBatch5.PointOfSale.Domain\DotNetTrainingBatch5.PointOfSale.Domain.csproj", "{A6DAC294-6F70-46FB-A678-712FB56C3D1D}"
 EndProject

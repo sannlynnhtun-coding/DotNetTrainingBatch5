@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetTrainingBatch5.PointOfSale.DataBase.Models;
+namespace DotNetTrainingBatch5.PointOfSale.Database.Models;
 
 public partial class POSDbContext : DbContext
 {

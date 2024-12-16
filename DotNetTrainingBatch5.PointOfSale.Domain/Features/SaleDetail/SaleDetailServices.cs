@@ -1,4 +1,4 @@
-﻿using DotNetTrainingBatch5.PointOfSale.DataBase.Models;
+﻿using DotNetTrainingBatch5.PointOfSale.Database.Models;
 using DotNetTrainingBatch5.PointOfSale.Domain;
 using DotNetTrainingBatch5.PointOfSale.Domain.Models.Product;
 using DotNetTrainingBatch5.PointOfSale.Domain.Models.Sale;

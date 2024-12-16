@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DotNetTrainingBatch5.PointOfSale.DataBase.Models;
+using DotNetTrainingBatch5.PointOfSale.Database.Models;
 using DotNetTrainingBatch5.PointOfSale.Domain.Models.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

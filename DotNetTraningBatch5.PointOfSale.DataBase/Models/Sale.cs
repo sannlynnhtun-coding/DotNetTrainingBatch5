@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotNetTrainingBatch5.PointOfSale.DataBase.Models;
+namespace DotNetTrainingBatch5.PointOfSale.Database.Models;
 
 public partial class Sale
 {
