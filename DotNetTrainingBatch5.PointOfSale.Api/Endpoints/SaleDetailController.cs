@@ -1,13 +1,4 @@
-﻿using DotNetTrainingBatch5.PointOfSale.Api.CombinedReqModel;
-using DotNetTrainingBatch5.PointOfSale.Domain;
-using DotNetTrainingBatch5.PointOfSale.Domain.Features.SaleDetail;
-using DotNetTrainingBatch5.PointOfSale.Domain.Models.Product;
-using DotNetTrainingBatch5.PointOfSale.Domain.Models.Sale;
-using DotNetTrainingBatch5.PointOfSale.Domain.Models.SaleDetail;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints;
+﻿namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints;
 
 [Route("api/[controller]")]
 [ApiController]

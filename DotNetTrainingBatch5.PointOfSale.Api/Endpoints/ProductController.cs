@@ -1,12 +1,4 @@
-﻿using DotNetTrainingBatch5.PointOfSale.DataBase.Models;
-using DotNetTrainingBatch5.PointOfSale.Domain.Features.Products;
-using DotNetTrainingBatch5.PointOfSale.Domain.Models.Product;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints;
+﻿namespace DotNetTrainingBatch5.PointOfSale.Api.Endpoints;
 
 [Route("api/[controller]")]
 [ApiController]
