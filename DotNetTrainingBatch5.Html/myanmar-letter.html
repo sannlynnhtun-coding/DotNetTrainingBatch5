@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myanmar Alphabet</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            /* background-color: #B18CD9; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            /* background-color: #C7AEE4; */
+            padding: 20px;
+            margin: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 90%;
+            /* Adjust width for responsiveness */
+        }
+
+        h1 {
+            color: #7888AF;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            /* Responsive grid */
+            gap: 50px;
+        }
+
+        .card {
+            background-color: #F0F3FC;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .card p {
+            margin: 5px 0;
+        }
+
+        .card .letter {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                /* Adjust column width */
+                gap: 20px;
+            }
+
+            .card .letter {
+                font-size: 1.5em;
+                /* Adjust letter size */
+            }
+
+            .card {
+                padding: 5px;
+            }
+        }
+
+        .card:hover {
+            background-color: #7888AF;
+            /* Use the secondary color for hover */
+            color: #C7AEE4;
+            /* Switch text color to the primary color */
+            transition: background-color 0.3s, color 0.3s;
+            /* Add a smooth transition effect */
+            cursor: pointer;
+            /* Change cursor to a pointer hand */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center mb-8">
+            <span class="text-gray-500">မြန်မာ</span> <span class="text-gray-900">အက္ခရာ</span>
+        </h1>
+        <div class="grid">
+            <div class="card">
+                <p class="letter">က</p>
+                <p>ka (gyi)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ခ</p>
+                <p>kha (kway)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဂ</p>
+                <p>ga (nge)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဃ</p>
+                <p>ga (gyi)</p>
+            </div>
+            <div class="card">
+                <p class="letter">င</p>
+                <p>nga</p>
+            </div>
+            <div class="card">
+                <p class="letter">စ</p>
+                <p>sa (lone)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဆ</p>
+                <p>sa (lain)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဇ</p>
+                <p>za (kwe)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဈ</p>
+                <p>za (myin swe)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ည</p>
+                <p>nya</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဋ</p>
+                <p>ta<br>(ta linn chate)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဌ</p>
+                <p>hta<br>(wun bare)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဍ</p>
+                <p>da<br>(yin gaout)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဎ</p>
+                <p>da<br>(yin moat)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဏ</p>
+                <p>na (gyi)</p>
+            </div>
+            <div class="card">
+                <p class="letter">တ</p>
+                <p>ta<br>(wun pu)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ထ</p>
+                <p>hta<br>(hsin htoo)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဒ</p>
+                <p>da<br>(dway)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဓ</p>
+                <p>da<br>(oat chike)</p>
+            </div>
+            <div class="card">
+                <p class="letter">န</p>
+                <p>na (nge)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ပ</p>
+                <p>pa (sout)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဖ</p>
+                <p>pha<br>(wet htoke)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဗ</p>
+                <p>ba<br>(let chike)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဘ</p>
+                <p>ba (gome)</p>
+            </div>
+            <div class="card">
+                <p class="letter">မ</p>
+                <p>ma</p>
+            </div>
+            <div class="card">
+                <p class="letter">ယ</p>
+                <p>ya (pet let)</p>
+            </div>
+            <div class="card">
+                <p class="letter">ရ</p>
+                <p>ya (gaout)</p>
+            </div>
+            <div class="card">
+                <p class="letter">လ</p>
+                <p>la</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဝ</p>
+                <p>wa</p>
+            </div>
+            <div class="card">
+                <p class="letter">သ</p>
+                <p>tha</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဟ</p>
+                <p>ha</p>
+            </div>
+            <div class="card">
+                <p class="letter">ဠ</p>
+                <p>la gyi</p>
+            </div>
+            <div class="card">
+                <p class="letter">အ</p>
+                <p>ah</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
