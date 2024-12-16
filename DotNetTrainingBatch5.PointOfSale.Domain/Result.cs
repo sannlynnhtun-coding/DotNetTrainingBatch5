@@ -100,6 +100,16 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
                 Type = EnumRespType.InvalidData
             };
         }
+        public static Result<T> BadRequestError(string message = "User Input Error", T? data = default)
+        {
+            return new Result<T>()
+            {
+                IsSuccess = false,
+                Data = data,
+                Message = message,
+                Type = EnumRespType.BadRequest
+            };
+        }
         public enum EnumRespType
         {
             None,
@@ -109,7 +119,8 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain
             SystemError,
             NotFound,
             DuplicateRecord,
-            InvalidData
+            InvalidData,
+            BadRequest
         }
     }
 }

@@ -9,6 +9,8 @@ namespace DotNetTrainingBatch5.PointOfSale.Domain.Models.Sale
 {
     public class SaleResModel
     {
-        public TblSale Sale { get; set; }
+       
     }
+
+   
 }
