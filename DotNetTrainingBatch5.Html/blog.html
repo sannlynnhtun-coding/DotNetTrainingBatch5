@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog CRUD</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="mb-3">
+        <label for="txtTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="txtTitle">
+    </div>
+    <div class="mb-3">
+        <label for="txtAuthor" class="form-label">Author</label>
+        <input type="text" class="form-control" id="txtAuthor">
+    </div>
+    <div class="mb-3">
+        <label for="txtContent" class="form-label">Content</label>
+        <input type="text" class="form-control" id="txtContent">
+    </div>
+    <button type="button" id="btnCancel" class="btn btn-secondary">Cancel</button>
+    <button type="button" id="btnSave" class="btn btn-success">Save</button>
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th></th>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+        <tbody id="tblBlogs">
+
+        </tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $('#btnCancel').click(function () {
+            clearControls();
+        });
+
+        function clearControls() {
+            $('#txtTitle').val('');
+            $('#txtAuthor').val('');
+            $('#txtContent').val('');
+
+            $('#txtTitle').focus();
+        }
+
+        // Create
+        $('#btnSave').click(function () {
+            if (editId == null) {
+                blogCreate();
+            } else {
+                blogUpdate();
+            }
+        });
+
+        function blogCreate() {
+            const title = $('#txtTitle').val();
+            const author = $('#txtAuthor').val();
+            const content = $('#txtContent').val();
+
+            let lst = getData();
+
+            const blog = {
+                id: uuidv4(),
+                title: title,
+                author: author,
+                content: content
+            };
+            lst.push(blog);
+
+            const jsonStr = JSON.stringify(lst);
+            localStorage.setItem('blogs', jsonStr);
+
+            clearControls();
+
+            alert('Saved successfully');
+
+            loadData();
+        }
+
+        function blogUpdate() {
+            const title = $('#txtTitle').val();
+            const author = $('#txtAuthor').val();
+            const content = $('#txtContent').val();
+
+            let lst = getData();
+
+            let index = lst.findIndex(x => x.id == editId);
+            lst[index].title = title;
+            lst[index].author = author;
+            lst[index].content = content;
+
+            const jsonStr = JSON.stringify(lst);
+            localStorage.setItem('blogs', jsonStr);
+
+            clearControls();
+
+            editId = null;
+
+            alert('Updated successfully');
+
+            loadData();
+        }
+
+        $(document).ready(function () {
+            loadData();
+        })
+
+        function getData() {
+            let lst = localStorage.getItem('blogs'); // check room
+            if (lst == null) {
+                lst = [];
+            }
+            else {
+                lst = JSON.parse(lst);
+            }
+
+            return lst;
+        }
+
+        // Read
+        function loadData() {
+            let lst = getData();
+
+            // let trs = '';
+            $('#tblBlogs').html('');
+            for (let i = 0; i < lst.length; i++) {
+                const blog = lst[i];
+                const tr = `<tr>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-edit" data-blog-id="${blog.id}">Edit</button>
+                        <button type="button" class="btn btn-danger btn-delete" data-blog-id="${blog.id}">Delete</button>
+                    </td>
+                    <td>${i + 1}</td>
+                    <td>${blog.title}</td>
+                    <td>${blog.author}</td>
+                    <td>${blog.content}</td>
+                </tr>`;
+                $('#tblBlogs').append(tr);
+                // trs += tr;
+            }
+            // $('#tblBlogs').html(trs);
+
+            bindEditButton();
+            bindDeleteButton();
+        }
+
+        let editId = null;
+
+        // Edit
+        function bindEditButton() {
+            $('.btn-edit').click(function () {
+                let id = $(this).data('blog-id');
+                console.log({ id });
+                let lst = getData();
+
+                let filterList = lst.filter(x => x.id == id);
+                let item = filterList[0];
+                console.log({ item });
+                $('#txtTitle').val(item.title);
+                $('#txtAuthor').val(item.author);
+                $('#txtContent').val(item.content);
+
+                editId = item.id;
+            });
+        }
+
+        function bindDeleteButton() {
+            $('.btn-delete').click(function () {
+                let result = confirm('Are you sure to delete?');
+                if (!result) return;
+
+                let id = $(this).data('blog-id');
+
+                let lst = getData();
+
+                lst = lst.filter(x => x.id != id); // 10, 9
+
+                const jsonStr = JSON.stringify(lst);
+                localStorage.setItem('blogs', jsonStr);
+
+                clearControls();
+
+                alert('Deleted successfully');
+
+                loadData();
+            });
+        }
+
+        // $(document).ready(function () {
+        //     let lst = localStorage.getItem('blogs'); // check room
+        //     console.log(lst);
+        //     if (lst == null) {
+        //         lst = [];
+        //     }
+        //     else {
+        //         lst = JSON.parse(lst);
+        //     }
+
+        //     const blog = {
+        //         title: 'title',
+        //         author: 'author',
+        //         content: 'content'
+        //     };
+
+        //     lst.push(blog);
+
+        //     const jsonStr = JSON.stringify(lst);
+        //     localStorage.setItem('blogs', jsonStr);
+        // })
+
+        function uuidv4() {
+            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+                (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+            );
+        }
+
+        console.log(uuidv4());
+    </script>
+
+    // no room => create room
+    // if exist => create object
+</body>
+
+</html>
