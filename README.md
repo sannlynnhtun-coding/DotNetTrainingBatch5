@@ -187,3 +187,11 @@ dotnet ef dbcontext scaffold "Server=.;Database=DotNetTrainingBatch5;User Id=sa;
 - **Forget Password**
 - **Reset Password**
 - **First Time Login**
+
+
+MVC
+Model View Controller
+
+https://localhost:3000/home/index
+
+HomeController => Model => View (model) => Page (HTML)

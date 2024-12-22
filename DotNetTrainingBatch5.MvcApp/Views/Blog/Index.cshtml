@@ -1,0 +1,60 @@
+﻿@model List<TblBlog>
+
+
+@{
+	bool isShowMessage = TempData["IsSuccess"] != null;
+	bool isSuccess = false;
+	string message = "";
+	if (isShowMessage)
+	{
+		isSuccess = Convert.ToBoolean(TempData["IsSuccess"]);
+		message = Convert.ToString(TempData["Message"]);
+	}
+}
+
+@if (isShowMessage)
+{
+	if (isSuccess)
+	{
+		<div class="alert alert-success mb-3" role="alert">
+			@message
+		</div>
+	}
+	else
+	{
+		<div class="alert alert-danger mb-3" role="alert">
+			@message
+		</div>
+	}
+}
+
+<a href="/Blog/Create" class="btn btn-outline-success">Create New Blog</a>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th></th>
+			<th>No.</th>
+			<th>Blog Title</th>
+			<th>Blog Author</th>
+			<th>Blog Content</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int i = 0; i < Model.Count; i++)
+		{
+			var blog = Model[i];
+			<tr>
+				<td>
+					<a href="/Blog/Edit/@(blog.BlogId)" class="btn btn-warning">Edit</a>
+					<a href="/Blog/Delete/@(blog.BlogId)" class="btn btn-danger">Delete</a>
+					@* <a href="/Blog/Delete?blogId=@(blog.BlogId)" class="btn btn-danger">Delete</a> *@
+				</td>
+				<td>@(i + 1)</td>
+				<td>@blog.BlogTitle</td>
+				<td>@blog.BlogAuthor</td>
+				<td>@blog.BlogContent</td>
+			</tr>
+		}
+	</tbody>
+</table>
